@@ -15,17 +15,19 @@ const ClueList = forwardRef<HTMLDivElement, ClueListProps>(({ clues, onClueClick
   const renderClueSection = (type: ClueType, clueList: { [key: string]: string }) => (
     <div className="clue-section">
       <h3>{type.charAt(0).toUpperCase() + type.slice(1)}</h3>
-      {Object.entries(clueList).map(([number, clue]) => (
-        <p
-          key={`${type}-${number}`}
-          data-clue-id={`${type}-${number}`}
-          className={`clue ${selectedClue?.number === number && selectedClue?.type === type ? 'selected' : ''}`}
-          onClick={() => onClueClick(number, type)}
-        >
-          <span className="clue-number">{number}.</span>
-          <span className="clue-text">{clue}</span>
-        </p>
-      ))}
+      <div className="clue-container">
+        {Object.entries(clueList).map(([number, clue]) => (
+          <div
+            key={`${type}-${number}`}
+            data-clue-id={`${type}-${number}`}
+            className={`clue ${selectedClue?.number === number && selectedClue?.type === type ? 'selected' : ''}`}
+            onClick={() => onClueClick(number, type)}
+          >
+            <span className="clue-number">{number}</span>
+            <span className="clue-text">{clue}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 

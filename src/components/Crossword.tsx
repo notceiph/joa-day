@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Grid from './Grid';
 import ClueList from './ClueList';
 import { PuzzleData, ClueType } from '../types';
@@ -11,6 +11,7 @@ const Crossword: React.FC = () => {
   const [selectedCell, setSelectedCell] = useState<[number, number] | null>(null);
   const [direction, setDirection] = useState<'across' | 'down'>('across');
   const [selectedClue, setSelectedClue] = useState<{ number: string; type: ClueType } | null>(null);
+  const clueListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setPuzzle(puzzleData);
@@ -89,6 +90,40 @@ const Crossword: React.FC = () => {
     } else {
       setSelectedCell([row, col]);
     }
+    updateSelectedClue(row, col);
+  };
+
+  const updateSelectedClue = (row: number, col: number) => {
+    if (!puzzle) return;
+    const cellContent = puzzle.grid[row][col];
+    if (cellContent !== '#') {
+      let clueNumber: string;
+      let clueType: ClueType;
+
+      if (direction === 'across') {
+        clueNumber = findClueNumber(row, col, 'across');
+        clueType = 'across';
+      } else {
+        clueNumber = findClueNumber(row, col, 'down');
+        clueType = 'down';
+      }
+
+      setSelectedClue({ number: clueNumber, type: clueType });
+      scrollToClue(clueNumber, clueType);
+    }
+  };
+
+  const findClueNumber = (row: number, col: number, type: ClueType): string => {
+    if (type === 'across') {
+      while (col > 0 && puzzle!.grid[row][col - 1] !== '#') {
+        col--;
+      }
+    } else {
+      while (row > 0 && puzzle!.grid[row - 1][col] !== '#') {
+        row--;
+      }
+    }
+    return puzzle!.grid[row][col];
   };
 
   const checkAnswers = () => {
@@ -105,6 +140,7 @@ const Crossword: React.FC = () => {
     if (row !== -1 && col !== -1) {
       setSelectedCell([row, col]);
       setDirection(type);
+      scrollToClue(number, type);
     }
   }, [puzzle]);
 
@@ -149,6 +185,15 @@ const Crossword: React.FC = () => {
     return cells;
   }, [puzzle, selectedCell, direction]);
 
+  const scrollToClue = (number: string, type: ClueType) => {
+    if (clueListRef.current) {
+      const clueElement = clueListRef.current.querySelector(`[data-clue-id="${type}-${number}"]`);
+      if (clueElement) {
+        clueElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+  };
+
   if (!puzzle) return <div>Loading...</div>;
 
   return (
@@ -162,8 +207,10 @@ const Crossword: React.FC = () => {
           onCellClick={handleCellClick}
           selectedCell={selectedCell}
           currentWordCells={getCurrentWordCells()}
+          direction={direction}
         />
         <ClueList 
+          ref={clueListRef}
           clues={puzzle.clues} 
           onClueClick={handleClueClick}
           selectedClue={selectedClue}

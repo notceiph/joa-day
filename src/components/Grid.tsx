@@ -1,6 +1,7 @@
 import React from 'react';
 import Cell from './Cell';
 import '../styles/Grid.css';
+import { ClueType } from '../types';
 
 interface GridProps {
   grid: string[][];
@@ -10,6 +11,7 @@ interface GridProps {
   onCellClick: (row: number, col: number) => void;
   selectedCell: [number, number] | null;
   currentWordCells: [number, number][];
+  direction: ClueType;
 }
 
 const Grid: React.FC<GridProps> = ({
@@ -19,7 +21,8 @@ const Grid: React.FC<GridProps> = ({
   onBackspace,
   onCellClick,
   selectedCell,
-  currentWordCells
+  currentWordCells,
+  direction
 }) => {
   const isHighlighted = (row: number, col: number) => {
     return currentWordCells.some(([r, c]) => r === row && c === col);
@@ -40,6 +43,7 @@ const Grid: React.FC<GridProps> = ({
               number={cell !== '#' && cell !== '.' ? parseInt(cell) : undefined}
               isSelected={selectedCell ? selectedCell[0] === rowIndex && selectedCell[1] === colIndex : false}
               isHighlighted={isHighlighted(rowIndex, colIndex)}
+              direction={direction}
             />
           ))}
         </div>

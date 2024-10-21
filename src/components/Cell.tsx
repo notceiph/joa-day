@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import '../styles/Cell.css';
+import { ClueType } from '../types';
 
 interface CellProps {
   value: string;
@@ -10,6 +11,7 @@ interface CellProps {
   number?: number;
   isSelected: boolean;
   isHighlighted: boolean;
+  direction: ClueType;
 }
 
 const Cell: React.FC<CellProps> = ({
@@ -20,7 +22,8 @@ const Cell: React.FC<CellProps> = ({
   isBlack,
   number,
   isSelected,
-  isHighlighted
+  isHighlighted,
+  direction
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -34,7 +37,7 @@ const Cell: React.FC<CellProps> = ({
     return <div className="cell black"></div>;
   }
 
-  const cellClassName = `cell ${isSelected ? 'selected' : ''} ${isHighlighted ? 'highlighted' : ''}`;
+  const cellClassName = `cell ${isSelected ? 'selected' : ''} ${isHighlighted ? 'highlighted' : ''} ${direction}`;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Backspace') {

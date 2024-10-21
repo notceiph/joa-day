@@ -36,3 +36,19 @@
   left: 2px;
   font-size: 10px;
 }
+
+.cell.across {
+  background-image: linear-gradient(to right, rgba(255,255,0,0.2), rgba(255,255,0,0.2));
+}
+
+.cell.down {
+  background-image: linear-gradient(to bottom, rgba(255,255,0,0.2), rgba(255,255,0,0.2));
+}
+
+.cell.selected.across {
+  background-image: linear-gradient(to right, rgba(255,255,0,0.5), rgba(255,255,0,0.5));
+}
+
+.cell.selected.down {
+  background-image: linear-gradient(to bottom, rgba(255,255,0,0.5), rgba(255,255,0,0.5));
+}

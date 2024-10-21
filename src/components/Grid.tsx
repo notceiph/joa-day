@@ -9,7 +9,7 @@ interface GridProps {
   onBackspace: (row: number, col: number) => void;
   onCellClick: (row: number, col: number) => void;
   selectedCell: [number, number] | null;
-  direction: 'across' | 'down';
+  currentWordCells: [number, number][];
 }
 
 const Grid: React.FC<GridProps> = ({
@@ -19,16 +19,10 @@ const Grid: React.FC<GridProps> = ({
   onBackspace,
   onCellClick,
   selectedCell,
-  direction
+  currentWordCells
 }) => {
   const isHighlighted = (row: number, col: number) => {
-    if (!selectedCell) return false;
-    const [selectedRow, selectedCol] = selectedCell;
-    if (direction === 'across') {
-      return row === selectedRow;
-    } else {
-      return col === selectedCol;
-    }
+    return currentWordCells.some(([r, c]) => r === row && c === col);
   };
 
   return (

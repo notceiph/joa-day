@@ -98,6 +98,35 @@ const Crossword: React.FC = () => {
     alert(correct ? 'Congratulations! All answers are correct!' : 'Some answers are incorrect. Keep trying!');
   };
 
+  const getCurrentWordCells = useCallback(() => {
+    if (!puzzle || !selectedCell) return [];
+
+    const [row, col] = selectedCell;
+    const cells: [number, number][] = [[row, col]];
+
+    if (direction === 'across') {
+      // Check left
+      for (let j = col - 1; j >= 0 && puzzle.grid[row][j] !== '#'; j--) {
+        cells.unshift([row, j]);
+      }
+      // Check right
+      for (let j = col + 1; j < puzzle.grid[row].length && puzzle.grid[row][j] !== '#'; j++) {
+        cells.push([row, j]);
+      }
+    } else {
+      // Check up
+      for (let i = row - 1; i >= 0 && puzzle.grid[i][col] !== '#'; i--) {
+        cells.unshift([i, col]);
+      }
+      // Check down
+      for (let i = row + 1; i < puzzle.grid.length && puzzle.grid[i][col] !== '#'; i++) {
+        cells.push([i, col]);
+      }
+    }
+
+    return cells;
+  }, [puzzle, selectedCell, direction]);
+
   if (!puzzle) return <div>Loading...</div>;
 
   return (
@@ -111,6 +140,7 @@ const Crossword: React.FC = () => {
           onCellClick={handleCellClick}
           selectedCell={selectedCell}
           direction={direction}
+          currentWordCells={getCurrentWordCells()}
         />
         <ClueList clues={puzzle.clues} />
       </div>

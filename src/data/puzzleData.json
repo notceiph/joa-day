@@ -1,0 +1,47 @@
+{
+  "grid": [
+    ["1", "2", "3", "4", "#", "5", "6", "7", "8"],
+    ["9", ".", ".", ".", "#", "10", ".", ".", "."],
+    ["11", ".", ".", ".", "12", ".", ".", ".", "."],
+    ["13", ".", ".", ".", ".", ".", "#", "14", "."],
+    ["#", "#", "#", "15", ".", ".", "16", ".", "."],
+    ["17", "18", "19", ".", ".", ".", "#", "20", "."],
+    ["21", ".", ".", ".", ".", "22", "23", ".", "."],
+    ["24", ".", ".", ".", "#", "25", ".", ".", "."],
+    ["26", ".", ".", ".", "#", "27", ".", ".", "."]
+  ],
+  "clues": {
+    "across": {
+      "1": "Web development library",
+      "5": "Programming language",
+      "9": "Data structure",
+      "10": "Version control system",
+      "11": "Markup language",
+      "13": "JavaScript runtime",
+      "15": "CSS preprocessor",
+      "17": "Package manager",
+      "20": "Frontend build tool",
+      "21": "JavaScript framework",
+      "24": "State management library",
+      "25": "Testing framework",
+      "26": "Browser API for storage",
+      "27": "CSS framework"
+    },
+    "down": {
+      "1": "React state hook",
+      "2": "JavaScript transpiler",
+      "3": "Code editor",
+      "4": "TypeScript compiler",
+      "6": "JavaScript task runner",
+      "7": "Frontend framework",
+      "8": "CSS-in-JS library",
+      "12": "JavaScript bundler",
+      "14": "React router library",
+      "16": "GraphQL client",
+      "18": "State container",
+      "19": "UI component library",
+      "22": "JavaScript linter",
+      "23": "CSS Grid or Flexbox"
+    }
+  }
+}

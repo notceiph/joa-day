@@ -92,30 +92,22 @@ const Crossword: React.FC = () => {
 
   const handleCellClick = (row: number, col: number) => {
     if (selectedCell && selectedCell[0] === row && selectedCell[1] === col) {
-      setDirection(prev => prev === 'across' ? 'down' : 'across');
+      const newDirection = direction === 'across' ? 'down' : 'across';
+      setDirection(newDirection);
+      updateSelectedClue(row, col, newDirection);
     } else {
       setSelectedCell([row, col]);
+      updateSelectedClue(row, col, direction);
     }
-    updateSelectedClue(row, col);
   };
 
-  const updateSelectedClue = (row: number, col: number) => {
+  const updateSelectedClue = (row: number, col: number, currentDirection: ClueType) => {
     if (!puzzle) return;
     const cellContent = puzzle.grid[row][col];
     if (cellContent !== '#') {
-      let clueNumber: string;
-      let clueType: ClueType;
-
-      if (direction === 'across') {
-        clueNumber = findClueNumber(row, col, 'across');
-        clueType = 'across';
-      } else {
-        clueNumber = findClueNumber(row, col, 'down');
-        clueType = 'down';
-      }
-
-      setSelectedClue({ number: clueNumber, type: clueType });
-      scrollToClue(clueNumber, clueType);
+      const clueNumber = findClueNumber(row, col, currentDirection);
+      setSelectedClue({ number: clueNumber, type: currentDirection });
+      scrollToClue(clueNumber, currentDirection);
     }
   };
 

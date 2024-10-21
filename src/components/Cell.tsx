@@ -42,11 +42,7 @@ const Cell: React.FC<CellProps> = ({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Backspace') {
       e.preventDefault();
-      if (value === '') {
-        onBackspace();
-      } else {
-        onChange('');
-      }
+      onBackspace();
     }
   };
 

@@ -42,14 +42,20 @@ const Crossword: React.FC = () => {
 
     setUserAnswers(prev => {
       const newAnswers = prev.map(r => [...r]);
-      newAnswers[row][col] = '';
+      if (newAnswers[row][col] !== '') {
+        // If the current cell has a value, clear it
+        newAnswers[row][col] = '';
+      } else {
+        // If the current cell is empty, move to the previous cell and clear it
+        const prevCell = getPreviousCell(row, col);
+        if (prevCell) {
+          const [prevRow, prevCol] = prevCell;
+          newAnswers[prevRow][prevCol] = '';
+          setSelectedCell(prevCell);
+        }
+      }
       return newAnswers;
     });
-
-    const prevCell = getPreviousCell(row, col);
-    if (prevCell) {
-      setSelectedCell(prevCell);
-    }
   }, [puzzle, direction]);
 
   const getNextCell = (row: number, col: number): [number, number] | null => {

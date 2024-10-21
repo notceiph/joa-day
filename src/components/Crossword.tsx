@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Grid from './Grid';
 import ClueList from './ClueList';
-import { PuzzleData } from '../types';
+import { PuzzleData, ClueType } from '../types';
 import puzzleData from '../data/puzzleData.json';
 import '../styles/Crossword.css';
 
@@ -10,6 +10,7 @@ const Crossword: React.FC = () => {
   const [userAnswers, setUserAnswers] = useState<string[][]>([]);
   const [selectedCell, setSelectedCell] = useState<[number, number] | null>(null);
   const [direction, setDirection] = useState<'across' | 'down'>('across');
+  const [selectedClue, setSelectedClue] = useState<{ number: string; type: ClueType } | null>(null);
 
   useEffect(() => {
     setPuzzle(puzzleData);
@@ -98,6 +99,27 @@ const Crossword: React.FC = () => {
     alert(correct ? 'Congratulations! All answers are correct!' : 'Some answers are incorrect. Keep trying!');
   };
 
+  const handleClueClick = useCallback((number: string, type: ClueType) => {
+    setSelectedClue({ number, type });
+    const [row, col] = findStartingCell(number, type);
+    if (row !== -1 && col !== -1) {
+      setSelectedCell([row, col]);
+      setDirection(type);
+    }
+  }, [puzzle]);
+
+  const findStartingCell = (number: string, type: ClueType): [number, number] => {
+    if (!puzzle) return [-1, -1];
+    for (let i = 0; i < puzzle.grid.length; i++) {
+      for (let j = 0; j < puzzle.grid[i].length; j++) {
+        if (puzzle.grid[i][j] === number) {
+          return [i, j];
+        }
+      }
+    }
+    return [-1, -1];
+  };
+
   const getCurrentWordCells = useCallback(() => {
     if (!puzzle || !selectedCell) return [];
 
@@ -139,10 +161,13 @@ const Crossword: React.FC = () => {
           onBackspace={handleBackspace}
           onCellClick={handleCellClick}
           selectedCell={selectedCell}
-          direction={direction}
           currentWordCells={getCurrentWordCells()}
         />
-        <ClueList clues={puzzle.clues} />
+        <ClueList 
+          clues={puzzle.clues} 
+          onClueClick={handleClueClick}
+          selectedClue={selectedClue}
+        />
       </div>
       <button onClick={checkAnswers} className="check-answers-btn">Check Answers</button>
     </div>

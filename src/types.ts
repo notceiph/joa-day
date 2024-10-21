@@ -5,3 +5,5 @@ export interface PuzzleData {
     down: { [key: string]: string };
   };
 }
+
+export type ClueType = 'across' | 'down';

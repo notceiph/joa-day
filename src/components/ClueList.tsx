@@ -22,7 +22,8 @@ const ClueList = forwardRef<HTMLDivElement, ClueListProps>(({ clues, onClueClick
           className={`clue ${selectedClue?.number === number && selectedClue?.type === type ? 'selected' : ''}`}
           onClick={() => onClueClick(number, type)}
         >
-          <strong>{number}.</strong> {clue}
+          <span className="clue-number">{number}.</span>
+          <span className="clue-text">{clue}</span>
         </p>
       ))}
     </div>

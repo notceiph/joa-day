@@ -33,8 +33,8 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-top: 10px; /* Added margin-top */
   margin-right: 10px; /* Add space between buttons */
+  height: 40px; /* Set a fixed height for consistency */
 }
 
 .check-answers-btn:hover {
@@ -46,6 +46,7 @@
   justify-content: flex-end; /* Align buttons to the right */
   width: 100%; /* Ensure it takes full width */
   margin-bottom: 10px; /* Space below the header */
+  align-items: center; /* Align items vertically in the center */
 }
 
 .difficulty-toggle {
@@ -57,6 +58,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+  height: 40px; /* Set a fixed height for consistency */
 }
 
 .difficulty-toggle:hover {

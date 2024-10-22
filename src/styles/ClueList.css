@@ -7,6 +7,14 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column; /* Ensure vertical stacking */
+}
+
+.clue-header {
+  display: flex;
+  justify-content: flex-end; /* Align the button to the right */
+  margin-bottom: 10px; /* Space below the button */
 }
 
 .clue-section {
@@ -58,4 +66,15 @@
   overflow-wrap: break-word;
   hyphens: auto;
   padding-left: 3px;
+}
+
+.difficulty-toggle {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }

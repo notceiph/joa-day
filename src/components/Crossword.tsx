@@ -11,7 +11,7 @@ const Crossword: React.FC = () => {
   const [selectedCell, setSelectedCell] = useState<[number, number] | null>(null);
   const [direction, setDirection] = useState<'across' | 'down'>('across');
   const [selectedClue, setSelectedClue] = useState<{ number: string; type: ClueType } | null>(null);
-  const [isHardMode, setIsHardMode] = useState<boolean>(false);
+  const [isHardMode, setIsHardMode] = useState<boolean>(true); // Set initial difficulty to Hard
   const clueListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -202,9 +202,9 @@ const Crossword: React.FC = () => {
   return (
     <div className="crossword">
       <div className="crossword-header">
-        <h2>League of Legends Champions Crossword</h2>
+        <button onClick={checkAnswers} className="check-answers-btn">Check Answers</button>
         <button onClick={toggleDifficulty} className="difficulty-toggle">
-          {isHardMode ? 'Switch to Easy Mode' : 'Switch to Hard Mode'}
+          {isHardMode ? 'Hard' : 'Easy'}
         </button>
       </div>
       <div className="crossword-container">
@@ -224,9 +224,9 @@ const Crossword: React.FC = () => {
           onClueClick={handleClueClick}
           selectedClue={selectedClue}
           isHardMode={isHardMode}
+          toggleDifficulty={toggleDifficulty}
         />
       </div>
-      <button onClick={checkAnswers} className="check-answers-btn">Check Answers</button>
     </div>
   );
 };

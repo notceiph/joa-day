@@ -44,11 +44,11 @@
 }
 
 .clue:hover {
-  background-color: #f0f0f0;
+  background-color: #b0b0b0; /* Darker gray for better contrast */
 }
 
 .clue.selected {
-  background-color: #e6e6e6;
+  background-color: #888888; /* Darker shade for selected clues */
   font-weight: bold;
 }
 

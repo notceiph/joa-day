@@ -27,18 +27,18 @@
 .check-answers-btn {
   padding: 8px 16px; /* Ensure consistent padding */
   font-size: 14px; /* Ensure consistent font size */
-  background-color: #4CAF50;
-  color: white;
-  border: none;
+  background-color: #fff; /* Set background to white */
+  color: black; /* Set text color to black */
+  border: 1px solid #000; /* Add a border for better visibility */
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, color 0.3s; /* Add transition for color change */
   margin-right: 10px; /* Add space between buttons */
   height: 40px; /* Set a fixed height for consistency */
 }
 
 .check-answers-btn:hover {
-  background-color: #45a049;
+  background-color: #f0f0f0; /* Light gray on hover */
 }
 
 .crossword-header {
@@ -52,15 +52,15 @@
 .difficulty-toggle {
   padding: 8px 16px; /* Ensure consistent padding */
   font-size: 14px; /* Ensure consistent font size */
-  background-color: #4CAF50;
-  color: white;
-  border: none;
+  background-color: #fff; /* Set background to white */
+  color: black; /* Set text color to black */
+  border: 1px solid #000; /* Add a border for better visibility */
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, color 0.3s; /* Add transition for color change */
   height: 40px; /* Set a fixed height for consistency */
 }
 
 .difficulty-toggle:hover {
-  background-color: #45a049;
+  background-color: #f0f0f0; /* Light gray on hover */
 }

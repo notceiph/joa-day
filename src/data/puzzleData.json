@@ -12,36 +12,120 @@
   ],
   "clues": {
     "across": {
-      "1": "Web development library",
-      "5": "Programming language",
-      "9": "Data structure",
-      "10": "Version control system",
-      "11": "Markup language",
-      "13": "JavaScript runtime",
-      "15": "CSS preprocessor",
-      "17": "Package manager",
-      "20": "Frontend build tool",
-      "21": "JavaScript framework",
-      "24": "State management library",
-      "25": "Testing framework",
-      "26": "Browser API for storage",
-      "27": "CSS framework"
+      "1": {
+        "easy": "Where is Zeri from?",
+        "hard": "Underground city, home of a certain electric marksman."
+      },
+      "5": {
+        "easy": "What symbolizes Zeri's connection to her community?",
+        "hard": "This item symbolizes the electrifying bond between a sharpshooter and her neighborhood."
+      },
+      "9": {
+        "easy": "What is Zeri's Q called?",
+        "hard": "Rapid electrical shot from a charged-up sharpshooter."
+      },
+      "10": {
+        "easy": "What is Zeri's first skin?",
+        "hard": "First bloom of Zeri in a special guise, but not quite lively."
+      },
+      "11": {
+        "easy": "What emotion does Nilah suppress to harness her power?",
+        "hard": "The emotion tucked away to forge strength and summon joyous prowess."
+      },
+      "13": {
+        "easy": "What weapon does Nilah use?",
+        "hard": "A flexible tool in the hands of an exuberant warrior, often used to dance through battles."
+      },
+      "15": {
+        "easy": "What region is Nilah closely associated with?",
+        "hard": "The treacherous port town linked with a joyful swordswoman."
+      },
+      "17": {
+        "easy": "Your favorite Nilah skin?",
+        "hard": "A mystical attire worn by Nilah, hinting at gatherings beneath the moonlit sky."
+      },
+      "20": {
+        "easy": "What city is Jinx from?",
+        "hard": "The bustling city of progress, where a certain chaotic marksman hails from."
+      },
+      "21": {
+        "easy": "What is Jinx's rocket launcher called?",
+        "hard": "Her explosive companion, a rocket launcher that's as quirky and unpredictable as the blue-haired gunner herself."
+      },
+      "24": {
+        "easy": "What is Jinx's Ult?",
+        "hard": "The ultimate in destructive delivery, launched with a bang by a manic gunner."
+      },
+      "25": {
+        "easy": "Favorite Jinx Skin?",
+        "hard": "Her cosmic ensemble, where chaos meets celestial duty."
+      },
+      "26": {
+        "easy": "What is Zyra's first skin?",
+        "hard": "Her initial transformation for the thorny enchantress, draped in eerie charm."
+      },
+      "27": {
+        "easy": "Zyra E - _____ Roots.",
+        "hard": "Roots that ensnare foes, part of the thorny queen's lethal embrace."
+      }
     },
     "down": {
-      "1": "React state hook",
-      "2": "JavaScript transpiler",
-      "3": "Code editor",
-      "4": "TypeScript compiler",
-      "6": "JavaScript task runner",
-      "7": "Frontend framework",
-      "8": "CSS-in-JS library",
-      "12": "JavaScript bundler",
-      "14": "React router library",
-      "16": "GraphQL client",
-      "18": "State container",
-      "19": "UI component library",
-      "22": "JavaScript linter",
-      "23": "CSS Grid or Flexbox"
+      "1": {
+        "easy": "What Mastery level are you on Zyra?",
+        "hard": "An impressive mastery milestone for the garden's keeper."
+      },
+      "2": {
+        "easy": "How many skins does Zyra have? The current last is Blood Moon.",
+        "hard": "Amidst the League's wild flora, how many times does this plant queen change her attire?"
+      },
+      "3": {
+        "easy": "Where is Ahri from?",
+        "hard": "A mystical land steeped in magic, where our enchanting fox emerged."
+      },
+      "4": {
+        "easy": "Ahri R - ____ Rush.",
+        "hard": "The fox's ethereal force that propels her ultimate dash across the battlefield."
+      },
+      "6": {
+        "easy": "Ahri's Love",
+        "hard": "The fox's captivating allure that makes her foes swoon and become admirers."
+      },
+      "7": {
+        "easy": "Favorite Ahri Skin?",
+        "hard": "Your favored attire of the cunning fox, where ethereal beauty meets floral grace."
+      },
+      "8": {
+        "easy": "The emotion tucked away to forge strength and summon joyous prowess.",
+        "hard": "The emotion tucked away to forge strength and summon joyous prowess."
+      },
+      "12": {
+        "easy": "A flexible tool in the hands of an exuberant warrior, often used to dance through battles.",
+        "hard": "A flexible tool in the hands of an exuberant warrior, often used to dance through battles."
+      },
+      "14": {
+        "easy": "The treacherous port town linked with a joyful swordswoman.",
+        "hard": "The treacherous port town linked with a joyful swordswoman."
+      },
+      "16": {
+        "easy": "A mystical attire worn by Nilah, hinting at gatherings beneath the moonlit sky.",
+        "hard": "A mystical attire worn by Nilah, hinting at gatherings beneath the moonlit sky."
+      },
+      "18": {
+        "easy": "The bustling city of progress, where a certain chaotic marksman hails from.",
+        "hard": "The bustling city of progress, where a certain chaotic marksman hails from."
+      },
+      "19": {
+        "easy": "Her explosive companion, a rocket launcher that's as quirky and unpredictable as the blue-haired gunner herself.",
+        "hard": "Her explosive companion, a rocket launcher that's as quirky and unpredictable as the blue-haired gunner herself."
+      },
+      "22": {
+        "easy": "The ultimate in destructive delivery, launched with a bang by a manic gunner.",
+        "hard": "The ultimate in destructive delivery, launched with a bang by a manic gunner."
+      },
+      "23": {
+        "easy": "Her cosmic ensemble, where chaos meets celestial duty.",
+        "hard": "Her cosmic ensemble, where chaos meets celestial duty."
+      }
     }
   }
 }

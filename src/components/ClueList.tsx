@@ -4,15 +4,16 @@ import { ClueType } from '../types';
 
 interface ClueListProps {
   clues: {
-    across: { [key: string]: string };
-    down: { [key: string]: string };
+    across: { [key: string]: { easy: string; hard: string } };
+    down: { [key: string]: { easy: string; hard: string } };
   };
   onClueClick: (number: string, type: ClueType) => void;
   selectedClue: { number: string; type: ClueType } | null;
+  isHardMode: boolean;
 }
 
-const ClueList = forwardRef<HTMLDivElement, ClueListProps>(({ clues, onClueClick, selectedClue }, ref) => {
-  const renderClueSection = (type: ClueType, clueList: { [key: string]: string }) => (
+const ClueList = forwardRef<HTMLDivElement, ClueListProps>(({ clues, onClueClick, selectedClue, isHardMode }, ref) => {
+  const renderClueSection = (type: ClueType, clueList: { [key: string]: { easy: string; hard: string } }) => (
     <div className="clue-section">
       <h3>{type.charAt(0).toUpperCase() + type.slice(1)}</h3>
       <div className="clue-container">
@@ -24,7 +25,7 @@ const ClueList = forwardRef<HTMLDivElement, ClueListProps>(({ clues, onClueClick
             onClick={() => onClueClick(number, type)}
           >
             <span className="clue-number">{number}</span>
-            <span className="clue-text">{clue}</span>
+            <span className="clue-text">{isHardMode ? clue.hard : clue.easy}</span>
           </div>
         ))}
       </div>

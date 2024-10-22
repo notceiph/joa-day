@@ -7,6 +7,7 @@ const App: React.FC = () => {
     <div className="App">
       <h1>wtf its ur birthday joa</h1>
       <h4>this is part 1 pal i hope you have fun</h4>
+      <h2>League of Legends Champions Crossword</h2>
       <Crossword />
     </div>
   );

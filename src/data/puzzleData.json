@@ -115,44 +115,44 @@
         "answer": "SPIRITBLOSSOM"
       },
       "8": {
-        "easy": "The emotion tucked away to forge strength and summon joyous prowess.",
-        "hard": "The emotion tucked away to forge strength and summon joyous prowess.",
-        "answer": "SADNESS"
+        "easy": "What is Ahri's passive called?",
+        "hard": "The essence-stealing ability that fuels the nine-tailed fox's power.",
+        "answer": "ESSENCETHEFT"
       },
       "12": {
-        "easy": "A flexible tool in the hands of an exuberant warrior, often used to dance through battles.",
-        "hard": "A flexible tool in the hands of an exuberant warrior, often used to dance through battles.",
-        "answer": "WHIP"
+        "easy": "What is Nilah's weapon made of?",
+        "hard": "The mystical substance that forms Nilah's fluid and deadly weapon.",
+        "answer": "WATER"
       },
       "14": {
-        "easy": "The treacherous port town linked with a joyful swordswoman.",
-        "hard": "The treacherous port town linked with a joyful swordswoman.",
-        "answer": "BILGEWATER"
+        "easy": "What is Nilah's Q ability called?",
+        "hard": "The formless blade technique that slashes through Nilah's foes.",
+        "answer": "FORMLESSBLADE"
       },
       "16": {
-        "easy": "A mystical attire worn by Nilah, hinting at gatherings beneath the moonlit sky.",
-        "hard": "A mystical attire worn by Nilah, hinting at gatherings beneath the moonlit sky.",
-        "answer": "COVEN"
+        "easy": "What is Nilah's ultimate ability?",
+        "hard": "The joyous finale that pulls enemies into Nilah's deadly dance.",
+        "answer": "APOTHEOSIS"
       },
       "18": {
-        "easy": "The bustling city of progress, where a certain chaotic marksman hails from.",
-        "hard": "The bustling city of progress, where a certain chaotic marksman hails from.",
-        "answer": "PILTOVER"
+        "easy": "What is Jinx's signature hairstyle?",
+        "hard": "The distinctive twin tresses that frame the face of Piltover's most wanted.",
+        "answer": "BRAIDS"
       },
       "19": {
-        "easy": "Her explosive companion, a rocket launcher that's as quirky and unpredictable as the blue-haired gunner herself.",
-        "hard": "Her explosive companion, a rocket launcher that's as quirky and unpredictable as the blue-haired gunner herself.",
-        "answer": "FISHBONES"
+        "easy": "What is Jinx's W ability?",
+        "hard": "The long-range shock that zaps enemies from afar.",
+        "answer": "ZAP"
       },
       "22": {
-        "easy": "The ultimate in destructive delivery, launched with a bang by a manic gunner.",
-        "hard": "The ultimate in destructive delivery, launched with a bang by a manic gunner.",
-        "answer": "SUPERMEGADEATHROCKET"
+        "easy": "What is Zyra's passive called?",
+        "hard": "The posthumous bloom that allows Zyra to strike one last time.",
+        "answer": "GARDENOFTHORNE"
       },
       "23": {
-        "easy": "Her cosmic ensemble, where chaos meets celestial duty.",
-        "hard": "Her cosmic ensemble, where chaos meets celestial duty.",
-        "answer": "STARGUARDIAN"
+        "easy": "What type of plants does Zyra summon?",
+        "hard": "The thorny flora that Zyra commands to do her bidding.",
+        "answer": "VINES"
       }
     }
   }

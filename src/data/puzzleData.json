@@ -10,11 +10,11 @@
     [".", ".", ".", ".", "T", "W", "O", "N", "I", "N", "E", ".", "G", ".", ".", ".", ".", "M", ".", ".", ".", ".", ".", ".", "."],
     [".", ".", ".", ".", "E", ".", "V", ".", "S", "A", "D", "N", "E", "S", "S", ".", ".", "E", ".", ".", ".", ".", ".", ".", "."],
     [".", ".", ".", ".", "D", ".", "E", ".", "H", ".", ".", ".", ".", ".", ".", ".", ".", "G", "R", "A", "S", "P", "I", "N", "G"],
-    [".", ".", ".", ".", ".", ".", "N", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "A", ".", ".", ".", ".", "O", ".", "."],
-    [".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "D", ".", ".", ".", ".", "N", ".", "."],
-    [".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "E", "L", "E", "V", "E", "N", ".", "I", ".", "."],
-    [".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "A", ".", ".", ".", ".", "A", ".", "."],
-    [".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "S", "P", "I", "R", "I", "T", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", "N", ".", "B", ".", ".", ".", ".", ".", ".", ".", ".", "A", ".", ".", ".", ".", "O", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", ".", "O", ".", ".", ".", ".", ".", ".", ".", ".", "D", ".", ".", ".", ".", "N", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", ".", "N", ".", ".", ".", ".", ".", ".", "E", "L", "E", "V", "E", "N", ".", "I", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", ".", "E", ".", ".", ".", ".", ".", ".", ".", ".", "A", ".", ".", ".", ".", "A", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", ".", "S", ".", ".", ".", "S", "P", "I", "R", "I", "T", ".", ".", ".", ".", ".", ".", "."],
     [".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "H", ".", ".", ".", ".", ".", ".", "."]
   ],
   "clues": {
@@ -37,7 +37,7 @@
       "10": {
         "easy": "What is Zeri's first skin?",
         "hard": "First bloom of Zeri in a special guise, but not quite lively.",
-        "answer": "WITHEREDROSE"
+        "answer": "WITHERED"
       },
       "11": {
         "easy": "What emotion does Nilah suppress to harness her power?",
@@ -52,7 +52,7 @@
       "15": {
         "easy": "What region is Nilah closely associated with?",
         "hard": "The treacherous port town linked with a joyful swordswoman.",
-        "answer": "BILGEWATER"
+        "answer": "BILGE"
       },
       "17": {
         "easy": "Your favorite Nilah skin?",
@@ -72,12 +72,12 @@
       "24": {
         "easy": "What is Jinx's Ult?",
         "hard": "The ultimate in destructive delivery, launched with a bang by a manic gunner.",
-        "answer": "SUPERMEGADEATHROCKET"
+        "answer": "SUPERMEGADEATH"
       },
       "25": {
         "easy": "Favorite Jinx Skin?",
         "hard": "Her cosmic ensemble, where chaos meets celestial duty.",
-        "answer": "STARGUARDIAN"
+        "answer": "STAR"
       },
       "26": {
         "easy": "What is Zyra's first skin?",
@@ -94,7 +94,7 @@
       "1": {
         "easy": "What Mastery level are you on Zyra?",
         "hard": "An impressive mastery milestone for the garden's keeper.",
-        "answer": "TWENTYNINE"
+        "answer": "TWONINE"
       },
       "2": {
         "easy": "How many skins does Zyra have? The current last is Blood Moon.",
@@ -119,47 +119,7 @@
       "7": {
         "easy": "Favorite Ahri Skin?",
         "hard": "Your favored attire of the cunning fox, where ethereal beauty meets floral grace.",
-        "answer": "SPIRITBLOSSOM"
-      },
-      "8": {
-        "easy": "What is Ahri's passive called?",
-        "hard": "The essence-stealing ability that fuels the nine-tailed fox's power.",
-        "answer": "ESSENCETHEFT"
-      },
-      "12": {
-        "easy": "What is Nilah's weapon made of?",
-        "hard": "The mystical substance that forms Nilah's fluid and deadly weapon.",
-        "answer": "WATER"
-      },
-      "14": {
-        "easy": "What is Nilah's Q ability called?",
-        "hard": "The formless blade technique that slashes through Nilah's foes.",
-        "answer": "FORMLESSBLADE"
-      },
-      "16": {
-        "easy": "What is Nilah's ultimate ability?",
-        "hard": "The joyous finale that pulls enemies into Nilah's deadly dance.",
-        "answer": "APOTHEOSIS"
-      },
-      "18": {
-        "easy": "What is Jinx's signature hairstyle?",
-        "hard": "The distinctive twin tresses that frame the face of Piltover's most wanted.",
-        "answer": "BRAIDS"
-      },
-      "19": {
-        "easy": "What is Jinx's W ability?",
-        "hard": "The long-range shock that zaps enemies from afar.",
-        "answer": "ZAP"
-      },
-      "22": {
-        "easy": "What is Zyra's passive called?",
-        "hard": "The posthumous bloom that allows Zyra to strike one last time.",
-        "answer": "GARDENOFTHORNE"
-      },
-      "23": {
-        "easy": "What type of plants does Zyra summon?",
-        "hard": "The thorny flora that Zyra commands to do her bidding.",
-        "answer": "VINES"
+        "answer": "BLOSSOM"
       }
     }
   }

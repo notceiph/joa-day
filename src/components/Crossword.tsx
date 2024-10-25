@@ -208,6 +208,14 @@ const Crossword: React.FC = () => {
         </button>
       </div>
       <div className="crossword-container">
+        <ClueList 
+          ref={clueListRef}
+          clues={puzzle.clues} 
+          onClueClick={handleClueClick}
+          selectedClue={selectedClue}
+          isHardMode={isHardMode}
+          toggleDifficulty={toggleDifficulty}
+        />
         <Grid
           grid={puzzle.grid}
           userAnswers={userAnswers}
@@ -217,14 +225,6 @@ const Crossword: React.FC = () => {
           selectedCell={selectedCell}
           currentWordCells={getCurrentWordCells()}
           direction={direction}
-        />
-        <ClueList 
-          ref={clueListRef}
-          clues={puzzle.clues} 
-          onClueClick={handleClueClick}
-          selectedClue={selectedClue}
-          isHardMode={isHardMode}
-          toggleDifficulty={toggleDifficulty}
         />
       </div>
     </div>

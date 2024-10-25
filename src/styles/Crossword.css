@@ -7,10 +7,10 @@
 
 .crossword-container {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start; /* Align items to the top */
-  gap: 20px;
+  flex-direction: column; /* Ensure vertical stacking */
+  justify-content: flex-start; /* Align items to the top */
+  align-items: center; /* Center items horizontally */
+  gap: 20px; /* Optional: space between ClueList and Grid */
   margin-bottom: 10px; /* Reduced from 20px */
   max-width: 1000px; /* Adjust this value as needed */
   margin-left: auto;

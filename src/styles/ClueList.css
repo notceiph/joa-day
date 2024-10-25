@@ -2,8 +2,8 @@
   width: 100%; /* Set to 100% to match the grid's width */
   max-width: 1000px; /* Optional: Set a max-width to match the grid */
   height: auto;
-  max-height: 500px;
-  overflow-y: auto;
+  max-height: 140px; /* Reduced from 220px to 198px (10% smaller) */
+  overflow-y: auto; /* Enable vertical scrolling */
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -15,11 +15,13 @@
 .clue-list-container {
   display: flex; /* Use flexbox to align across and down sections */
   justify-content: space-between; /* Space between the two sections */
+  height: 100%; /* Ensure the container takes full height */
 }
 
 .clue-section {
   flex: 1; /* Allow each section to take equal space */
   margin: 0 10px; /* Optional: Add some margin between sections */
+  overflow-y: auto; /* Enable scrolling for each section if needed */
 }
 
 .clue-header {

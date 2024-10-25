@@ -18,7 +18,7 @@
 }
 
 .cell.highlighted {
-  background-color: #888888;
+  background-color: #888888; /* Adjust color as needed */
 }
 
 .cell-input {

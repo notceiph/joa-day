@@ -1,5 +1,6 @@
 .clue-list {
-  width: 300px;
+  width: 100%; /* Set to 100% to match the grid's width */
+  max-width: 1000px; /* Optional: Set a max-width to match the grid */
   height: auto;
   max-height: 500px;
   overflow-y: auto;

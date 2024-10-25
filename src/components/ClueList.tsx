@@ -34,8 +34,10 @@ const ClueList = forwardRef<HTMLDivElement, ClueListProps>(({ clues, onClueClick
 
   return (
     <div className="clue-list" ref={ref}>
-      {renderClueSection('across', clues.across)}
-      {renderClueSection('down', clues.down)}
+      <div className="clue-list-container">
+        {renderClueSection('across', clues.across)}
+        {renderClueSection('down', clues.down)}
+      </div>
     </div>
   );
 });

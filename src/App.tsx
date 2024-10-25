@@ -5,8 +5,8 @@ import './App.css';
 const App: React.FC = () => {
   return (
     <div className="App">
-      <h1>wtf its ur birthday joa</h1>
-      <h4>this is part 1 pal i hope you have fun</h4>
+      <h1>happy birthday joa :)</h1>
+      <h4>you deserve all the love and recognition in the world 💕</h4>
       <Crossword />
     </div>
   );

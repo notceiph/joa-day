@@ -127,9 +127,18 @@ const Crossword: React.FC = () => {
 
   const checkAnswers = () => {
     if (!puzzle) return;
+
     const correct = userAnswers.every((row, i) =>
-      row.every((cell, j) => cell === '' || cell === puzzle.grid[i][j])
+        row.every((cell, j) => {
+            // Check if the cell is empty
+            if (cell === '') {
+                return false; // If any cell is empty, return false
+            }
+            // Check if the cell matches the puzzle grid
+            return cell === puzzle.grid[i][j];
+        })
     );
+
     alert(correct ? 'Congratulations! All answers are correct!' : 'Some answers are incorrect. Keep trying!');
   };
 

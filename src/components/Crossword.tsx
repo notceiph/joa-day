@@ -65,12 +65,16 @@ const Crossword: React.FC = () => {
     if (direction === 'across') {
       for (let j = col + 1; j < puzzle.grid[row].length; j++) {
         if (puzzle.grid[row][j] === '#') break; // Stop at '#'
-        if (puzzle.grid[row][j] === '.') return [row, j]; // Move to '.'
+        if (puzzle.grid[row][j] === '.' || !isNaN(Number(puzzle.grid[row][j]))) {
+          return [row, j]; // Move to '.' or a number
+        }
       }
     } else {
       for (let i = row + 1; i < puzzle.grid.length; i++) {
         if (puzzle.grid[i][col] === '#') break; // Stop at '#'
-        if (puzzle.grid[i][col] === '.') return [i, col]; // Move to '.'
+        if (puzzle.grid[i][col] === '.' || !isNaN(Number(puzzle.grid[i][col]))) {
+          return [i, col]; // Move to '.' or a number
+        }
       }
     }
 

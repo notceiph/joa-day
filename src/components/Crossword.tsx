@@ -1,18 +1,20 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, createContext, useContext } from 'react';
 import Grid from './Grid';
 import ClueList from './ClueList';
 import { PuzzleData, ClueType } from '../types';
 import puzzleData from '../data/puzzleData.json';
 import '../styles/Crossword.css';
 
-const Crossword: React.FC = () => {
+// Create a context for the crossword state
+const CrosswordContext = createContext<any>(null);
+
+const CrosswordProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [puzzle, setPuzzle] = useState<PuzzleData | null>(null);
   const [userAnswers, setUserAnswers] = useState<string[][]>([]);
   const [selectedCell, setSelectedCell] = useState<[number, number] | null>(null);
   const [direction, setDirection] = useState<'across' | 'down'>('across');
   const [selectedClue, setSelectedClue] = useState<{ number: string; type: ClueType } | null>(null);
   const [isHardMode, setIsHardMode] = useState<boolean>(true); // Set initial difficulty to Hard
-  const clueListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setPuzzle(puzzleData);
@@ -21,8 +23,47 @@ const Crossword: React.FC = () => {
     ));
   }, []);
 
+  return (
+    <CrosswordContext.Provider value={{
+      puzzle,
+      userAnswers,
+      setUserAnswers,
+      selectedCell,
+      setSelectedCell,
+      direction,
+      setDirection,
+      selectedClue,
+      setSelectedClue,
+      isHardMode,
+      setIsHardMode,
+    }}>
+      {children}
+    </CrosswordContext.Provider>
+  );
+};
+
+const Crossword: React.FC = () => {
+  const {
+    puzzle,
+    userAnswers,
+    setUserAnswers,
+    selectedCell,
+    setSelectedCell,
+    direction,
+    setDirection,
+    selectedClue,
+    setSelectedClue,
+    isHardMode,
+    setIsHardMode,
+  } = useContext(CrosswordContext);
+
+  const clueListRef = useRef<HTMLDivElement>(null);
+
   const handleInputChange = useCallback((row: number, col: number, value: string) => {
     if (!puzzle) return;
+
+    // Validate input: only allow letters
+    if (!/^[A-Z]*$/.test(value.toUpperCase())) return;
 
     setUserAnswers(prev => {
       const newAnswers = prev.map(r => [...r]);
@@ -212,10 +253,32 @@ const Crossword: React.FC = () => {
     setIsHardMode(!isHardMode);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (!selectedCell) return;
+
+    const [row, col] = selectedCell;
+    switch (event.key) {
+      case 'ArrowUp':
+        if (row > 0) setSelectedCell([row - 1, col]);
+        break;
+      case 'ArrowDown':
+        if (row < puzzle.grid.length - 1) setSelectedCell([row + 1, col]);
+        break;
+      case 'ArrowLeft':
+        if (col > 0) setSelectedCell([row, col - 1]);
+        break;
+      case 'ArrowRight':
+        if (col < puzzle.grid[row].length - 1) setSelectedCell([row, col + 1]);
+        break;
+      default:
+        break;
+    }
+  };
+
   if (!puzzle) return <div>Loading...</div>;
 
   return (
-    <div className="crossword">
+    <div onKeyDown={handleKeyDown} tabIndex={0} className="crossword">
       <div className="crossword-header">
         <button onClick={checkAnswers} className="check-answers-btn">Check Answers</button>
         <button onClick={toggleDifficulty} className="difficulty-toggle">
@@ -246,4 +309,11 @@ const Crossword: React.FC = () => {
   );
 };
 
-export default Crossword;
+// Wrap the Crossword component with the provider
+const App: React.FC = () => (
+  <CrosswordProvider>
+    <Crossword />
+  </CrosswordProvider>
+);
+
+export default App;

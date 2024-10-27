@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import '../styles/ClueList.css';
 import { ClueType } from '../types';
 
-interface ClueListProps {
+export interface ClueListProps {
   clues: {
     across: { [key: string]: { easy: string; hard: string } };
     down: { [key: string]: { easy: string; hard: string } };
@@ -10,6 +10,7 @@ interface ClueListProps {
   onClueClick: (number: string, type: ClueType) => void;
   selectedClue: { number: string; type: ClueType } | null;
   isHardMode: boolean;
+  toggleDifficulty: () => void;
 }
 
 const ClueList = forwardRef<HTMLDivElement, ClueListProps>(({ clues, onClueClick, selectedClue, isHardMode }, ref) => {

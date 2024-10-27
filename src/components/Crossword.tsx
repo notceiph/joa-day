@@ -65,13 +65,15 @@ const Crossword: React.FC = () => {
     // Validate input: only allow letters
     if (!/^[A-Z]*$/.test(value.toUpperCase())) return;
 
+    const upperCaseValue = value.toUpperCase(); // Convert input to uppercase
+
     setUserAnswers(prev => {
       const newAnswers = prev.map(r => [...r]);
-      newAnswers[row][col] = value.toUpperCase();
+      newAnswers[row][col] = upperCaseValue; // Store the uppercase value
       return newAnswers;
     });
 
-    if (value !== '') {
+    if (upperCaseValue !== '') {
       const nextCell = getNextCell(row, col);
       if (nextCell) {
         setSelectedCell(nextCell);
@@ -175,18 +177,47 @@ const Crossword: React.FC = () => {
   const checkAnswers = () => {
     if (!puzzle) return;
 
-    const correct = userAnswers.every((row, i) =>
-        row.every((cell, j) => {
-            // Check if the cell is empty
-            if (cell === '') {
-                return false; // If any cell is empty, return false
-            }
-            // Check if the cell matches the puzzle grid
-            return cell === puzzle.grid[i][j];
-        })
-    );
+    let incorrectCount = 0; // Initialize a counter for incorrect answers
+    let hasInput = false; // Track if there is any user input
 
-    alert(correct ? 'Congratulations! All answers are correct!' : 'Some answers are incorrect. Keep trying!');
+    // Check across clues
+    for (const clueNumber in puzzle.clues.across) {
+      const clue = puzzle.clues.across[clueNumber];
+      const [startRow, startCol] = findStartingCell(clueNumber, 'across');
+      if (startRow !== -1 && startCol !== -1) {
+        const userAnswer = userAnswers[startRow].slice(startCol, startCol + clue.answer.length).join('');
+        if (userAnswer.toUpperCase() !== clue.answer.toUpperCase()) {
+          incorrectCount++;
+          console.log(`Incorrect answer for clue ${clueNumber}: expected "${clue.answer}", got "${userAnswer}"`);
+        } else {
+          hasInput = true; // Mark that there is at least one input
+        }
+      }
+    }
+
+    // Check down clues
+    for (const clueNumber in puzzle.clues.down) {
+      const clue = puzzle.clues.down[clueNumber];
+      const [startRow, startCol] = findStartingCell(clueNumber, 'down');
+      if (startRow !== -1 && startCol !== -1) {
+        const userAnswer = userAnswers.slice(startRow, startRow + clue.answer.length).map(row => row[startCol]).join('');
+        if (userAnswer.toUpperCase() !== clue.answer.toUpperCase()) {
+          incorrectCount++;
+          console.log(`Incorrect answer for clue ${clueNumber}: expected "${clue.answer}", got "${userAnswer}"`);
+        } else {
+          hasInput = true; // Mark that there is at least one input
+        }
+      }
+    }
+
+    // Alert the user with the result only if there is input
+    if (!hasInput) {
+      alert('Please enter some answers before checking!');
+    } else if (incorrectCount === 0) {
+      alert('Congratulations! All answers are correct!');
+    } else {
+      alert(`Some answers are incorrect. You have ${incorrectCount} incorrect answer(s). Keep trying!`);
+    }
   };
 
   const handleClueClick = useCallback((number: string, type: ClueType) => {

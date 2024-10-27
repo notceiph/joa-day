@@ -1,8 +1,20 @@
 export interface PuzzleData {
   grid: string[][];
   clues: {
-    across: { [key: string]: string };
-    down: { [key: string]: string };
+    across: {
+      [key: string]: {
+        easy: string;
+        hard: string;
+        answer: string;
+      };
+    };
+    down: {
+      [key: string]: {
+        easy: string;
+        hard: string;
+        answer: string;
+      };
+    };
   };
 }
 

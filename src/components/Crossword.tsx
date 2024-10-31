@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef, createContext, useContext } from 'react';
 import Grid from './Grid';
 import ClueList from './ClueList';
+import LoadingBar from './LoadingBar'; // Import the new LoadingBar component
 import { PuzzleData, ClueType } from '../types';
 import puzzleData from '../data/puzzleData.json';
 import '../styles/Crossword.css';
@@ -15,6 +16,8 @@ const CrosswordProvider: React.FC<{ children: React.ReactNode }> = ({ children }
   const [direction, setDirection] = useState<'across' | 'down'>('across');
   const [selectedClue, setSelectedClue] = useState<{ number: string; type: ClueType } | null>(null);
   const [isHardMode, setIsHardMode] = useState<boolean>(true); // Set initial difficulty to Hard
+  const [correctAnswersCount, setCorrectAnswersCount] = useState<number>(0); // New state for correct answers
+  const totalCluesCount = Object.keys(puzzleData.clues.across).length + Object.keys(puzzleData.clues.down).length; // Total clues
 
   useEffect(() => {
     setPuzzle(puzzleData);
@@ -36,6 +39,9 @@ const CrosswordProvider: React.FC<{ children: React.ReactNode }> = ({ children }
       setSelectedClue,
       isHardMode,
       setIsHardMode,
+      correctAnswersCount, // Provide correct answers count
+      setCorrectAnswersCount, // Provide setter for correct answers count
+      totalCluesCount, // Provide total clues count
     }}>
       {children}
     </CrosswordContext.Provider>
@@ -55,9 +61,17 @@ const Crossword: React.FC = () => {
     setSelectedClue,
     isHardMode,
     setIsHardMode,
+    correctAnswersCount,
+    setCorrectAnswersCount,
+    totalCluesCount,
   } = useContext(CrosswordContext);
 
   const clueListRef = useRef<HTMLDivElement>(null);
+
+  const calculateProgress = () => {
+    if (totalCluesCount === 0) return 0; // Prevent division by zero
+    return (correctAnswersCount / totalCluesCount) * 100; // Calculate progress percentage
+  };
 
   const handleInputChange = useCallback((row: number, col: number, value: string) => {
     if (!puzzle) return;
@@ -179,6 +193,7 @@ const Crossword: React.FC = () => {
 
     let incorrectCount = 0; // Initialize a counter for incorrect answers
     let hasInput = false; // Track if there is any user input
+    let correctCount = 0; // Track correct answers
 
     // Check across clues
     for (const clueNumber in puzzle.clues.across) {
@@ -190,6 +205,7 @@ const Crossword: React.FC = () => {
           incorrectCount++;
           console.log(`Incorrect answer for clue ${clueNumber}: expected "${clue.answer}", got "${userAnswer}"`);
         } else {
+          correctCount++; // Increment correct count
           hasInput = true; // Mark that there is at least one input
         }
       }
@@ -205,10 +221,14 @@ const Crossword: React.FC = () => {
           incorrectCount++;
           console.log(`Incorrect answer for clue ${clueNumber}: expected "${clue.answer}", got "${userAnswer}"`);
         } else {
+          correctCount++; // Increment correct count
           hasInput = true; // Mark that there is at least one input
         }
       }
     }
+
+    // Update the correct answers count state
+    setCorrectAnswersCount(correctCount);
 
     // Alert the user with the result only if there is input
     if (!hasInput) {
@@ -310,6 +330,7 @@ const Crossword: React.FC = () => {
 
   return (
     <div onKeyDown={handleKeyDown} tabIndex={0} className="crossword">
+      <LoadingBar progress={calculateProgress()} /> {/* Render the loading bar */}
       <div className="crossword-header">
         <button onClick={checkAnswers} className="check-answers-btn">Check Answers</button>
         <button onClick={toggleDifficulty} className="difficulty-toggle">

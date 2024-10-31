@@ -1,0 +1,24 @@
+.loading-bar-container {
+  width: 100%;
+  height: 30px; /* Increased height for better visibility */
+  background-color: #e0e0e0; /* Background color for the container */
+  border-radius: 10px; /* Rounded corners */
+  overflow: hidden; /* Ensure the shine effect stays within bounds */
+}
+
+.loading-bar {
+  height: 100%; /* Full height of the container */
+  background-color: #4caf50; /* Color of the loading bar */
+  border-radius: 10px; /* Rounded corners */
+  position: relative; /* Position for shine effect */
+  animation: shine 1.5s infinite; /* Apply shine animation */
+}
+
+@keyframes shine {
+  0% {
+    background-position: -200px 0; /* Start position */
+  }
+  100% {
+    background-position: 200px 0; /* End position */
+  }
+} 

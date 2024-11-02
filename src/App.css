@@ -12,3 +12,19 @@
 h1 {
   margin-bottom: 20px;
 }
+
+.game-switch-btn {
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: white;
+  color: black;
+  border: 1px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.game-switch-btn:hover {
+  background-color: #f0f0f0;
+}

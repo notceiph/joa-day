@@ -26,6 +26,9 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
     const [currentGuess, setCurrentGuess] = useState<string>('');
     const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>('playing');
     const [usedLetters, setUsedLetters] = useState<{ [key: string]: string }>({});
+    const [flipAnimations, setFlipAnimations] = useState<boolean[][]>(
+        Array(MAX_ATTEMPTS).fill([]).map(() => Array(WORD_LENGTH).fill(false))
+    );
 
     useEffect(() => {
         const randomWord = WORDS[Math.floor(Math.random() * WORDS.length)];
@@ -49,30 +52,43 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
         newGuesses[currentAttempt] = currentGuess;
         setGuesses(newGuesses);
 
-        // Update used letters status
-        const newUsedLetters = { ...usedLetters };
-        for (let i = 0; i < currentGuess.length; i++) {
-            const letter = currentGuess[i];
-            const status = getLetterStatus(letter, i, currentGuess);
-            // Only update if the new status is 'better' than the existing one
-            if (!newUsedLetters[letter] || 
-                (newUsedLetters[letter] === 'absent' && status !== 'absent') ||
-                (newUsedLetters[letter] === 'present' && status === 'correct')) {
-                newUsedLetters[letter] = status;
-            }
+        // Trigger flip animations sequentially
+        for (let i = 0; i < WORD_LENGTH; i++) {
+            setTimeout(() => {
+                setFlipAnimations(prev => {
+                    const newAnimations = [...prev];
+                    newAnimations[currentAttempt] = [...prev[currentAttempt]];
+                    newAnimations[currentAttempt][i] = true;
+                    return newAnimations;
+                });
+            }, i * 200); // Delay each flip by 200ms
         }
-        setUsedLetters(newUsedLetters);
 
-        if (currentGuess === targetWord) {
-            setGameStatus('won');
-            onClose(true);
-        } else if (currentAttempt === MAX_ATTEMPTS - 1) {
-            setGameStatus('lost');
-            onClose(false);
-        } else {
-            setCurrentAttempt(prev => prev + 1);
-            setCurrentGuess('');
-        }
+        // Update used letters status after a slight delay
+        setTimeout(() => {
+            const newUsedLetters = { ...usedLetters };
+            for (let i = 0; i < currentGuess.length; i++) {
+                const letter = currentGuess[i];
+                const status = getLetterStatus(letter, i, currentGuess);
+                if (!newUsedLetters[letter] || 
+                    (newUsedLetters[letter] === 'absent' && status !== 'absent') ||
+                    (newUsedLetters[letter] === 'present' && status === 'correct')) {
+                    newUsedLetters[letter] = status;
+                }
+            }
+            setUsedLetters(newUsedLetters);
+
+            if (currentGuess === targetWord) {
+                setGameStatus('won');
+                onClose(true);
+            } else if (currentAttempt === MAX_ATTEMPTS - 1) {
+                setGameStatus('lost');
+                onClose(false);
+            } else {
+                setCurrentAttempt(prev => prev + 1);
+                setCurrentGuess('');
+            }
+        }, WORD_LENGTH * 200); // Wait for all flips to complete
     };
 
     const getLetterStatus = (letter: string, position: number, guess: string) => {
@@ -118,8 +134,12 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
                         {Array(WORD_LENGTH).fill(0).map((_, j) => {
                             const letter = i === currentAttempt ? currentGuess[j] : guess[j];
                             const status = i < currentAttempt ? getLetterStatus(letter, j, guess) : 'empty';
+                            const shouldFlip = flipAnimations[i][j];
                             return (
-                                <div key={j} className={`wordle-cell ${status}`}>
+                                <div 
+                                    key={j} 
+                                    className={`wordle-cell ${status} ${shouldFlip ? 'flip' : ''}`}
+                                >
                                     {letter || ''}
                                 </div>
                             );

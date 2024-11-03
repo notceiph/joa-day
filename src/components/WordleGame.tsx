@@ -11,7 +11,13 @@ const MAX_ATTEMPTS = 6;
 const WORDS = [
     "HAPPY", "SMILE", "LAUGH", "DANCE", "SHINE",
     "DREAM", "HEART", "SWEET", "PEACE", "LIGHT"
-]; // You can expand this list
+];
+
+const KEYBOARD_ROWS = [
+    ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+    ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '⌫']
+];
 
 const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
     const [targetWord, setTargetWord] = useState<string>('');
@@ -19,9 +25,9 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
     const [currentAttempt, setCurrentAttempt] = useState<number>(0);
     const [currentGuess, setCurrentGuess] = useState<string>('');
     const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>('playing');
+    const [usedLetters, setUsedLetters] = useState<{ [key: string]: string }>({});
 
     useEffect(() => {
-        // Select a random word when the game starts
         const randomWord = WORDS[Math.floor(Math.random() * WORDS.length)];
         setTargetWord(randomWord);
     }, []);
@@ -29,9 +35,9 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
     const handleKeyPress = (key: string) => {
         if (gameStatus !== 'playing') return;
 
-        if (key === 'Backspace') {
+        if (key === '⌫' || key === 'Backspace') {
             setCurrentGuess(prev => prev.slice(0, -1));
-        } else if (key === 'Enter' && currentGuess.length === WORD_LENGTH) {
+        } else if ((key === 'ENTER' || key === 'Enter') && currentGuess.length === WORD_LENGTH) {
             submitGuess();
         } else if (/^[A-Za-z]$/.test(key) && currentGuess.length < WORD_LENGTH) {
             setCurrentGuess(prev => (prev + key).toUpperCase());
@@ -42,6 +48,20 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
         const newGuesses = [...guesses];
         newGuesses[currentAttempt] = currentGuess;
         setGuesses(newGuesses);
+
+        // Update used letters status
+        const newUsedLetters = { ...usedLetters };
+        for (let i = 0; i < currentGuess.length; i++) {
+            const letter = currentGuess[i];
+            const status = getLetterStatus(letter, i, currentGuess);
+            // Only update if the new status is 'better' than the existing one
+            if (!newUsedLetters[letter] || 
+                (newUsedLetters[letter] === 'absent' && status !== 'absent') ||
+                (newUsedLetters[letter] === 'present' && status === 'correct')) {
+                newUsedLetters[letter] = status;
+            }
+        }
+        setUsedLetters(newUsedLetters);
 
         if (currentGuess === targetWord) {
             setGameStatus('won');
@@ -68,6 +88,24 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [currentGuess, currentAttempt, gameStatus]);
 
+    const renderKeyboard = () => (
+        <div className="keyboard">
+            {KEYBOARD_ROWS.map((row, i) => (
+                <div key={i} className="keyboard-row">
+                    {row.map((key) => (
+                        <button
+                            key={key}
+                            className={`keyboard-key ${key.length > 1 ? 'wide-key' : ''} ${usedLetters[key] || ''}`}
+                            onClick={() => handleKeyPress(key)}
+                        >
+                            {key}
+                        </button>
+                    ))}
+                </div>
+            ))}
+        </div>
+    );
+
     return (
         <div className="wordle-game">
             <div className="wordle-header">
@@ -89,6 +127,7 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
                     </div>
                 ))}
             </div>
+            {renderKeyboard()}
             {gameStatus !== 'playing' && (
                 <div className="game-over">
                     <p>{gameStatus === 'won' ? 'Congratulations!' : `The word was: ${targetWord}`}</p>

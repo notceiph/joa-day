@@ -2,11 +2,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 32px;
     background-color: #121213;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     color: white;
+    max-width: 600px;
+    margin: 0 auto;
+    gap: 24px;
 }
 
 .wordle-header {
@@ -14,71 +17,97 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #3a3a3c;
+}
+
+.wordle-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin: 0;
 }
 
 .close-button {
     background: none;
     border: none;
-    font-size: 24px;
+    font-size: 28px;
     cursor: pointer;
-    padding: 0 8px;
-    color: white;
+    padding: 8px;
+    color: #ffffff;
+    opacity: 0.8;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+}
+
+.close-button:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .wordle-grid {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    margin-bottom: 20px;
+    gap: 6px;
+    padding: 12px 0;
 }
 
 .wordle-row {
     display: flex;
-    gap: 5px;
+    gap: 6px;
 }
 
 .wordle-cell {
-    width: 50px;
-    height: 50px;
+    width: 62px;
+    height: 62px;
     border: 2px solid #3a3a3c;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 32px;
+    font-weight: 700;
     text-transform: uppercase;
     background-color: transparent;
     color: white;
     transition: all 0.15s ease;
+    border-radius: 8px;
+    user-select: none;
 }
 
 .wordle-cell:not(.empty) {
-    animation: pop 0.1s ease-in-out;
+    animation: pop 0.15s ease-in-out;
+    border-color: #565758;
 }
 
 @keyframes pop {
     0% {
-        transform: scale(1);
+        transform: scale(0.8);
+        opacity: 0;
     }
-    50% {
+    40% {
         transform: scale(1.1);
+        opacity: 0.7;
     }
     100% {
         transform: scale(1);
+        opacity: 1;
     }
 }
 
 .wordle-cell.flip {
-    animation: flip 0.5s ease;
+    animation: flip 0.6s ease;
+    transform-style: preserve-3d;
 }
 
 @keyframes flip {
     0% {
         transform: rotateX(0deg);
     }
+    50% {
+        transform: rotateX(90deg);
+    }
     100% {
-        transform: rotateX(360deg);
+        transform: rotateX(0deg);
     }
 }
 
@@ -86,47 +115,71 @@
     background-color: #538d4e;
     border-color: #538d4e;
     color: white;
+    animation: reveal 0.3s ease;
 }
 
 .wordle-cell.present {
     background-color: #b59f3b;
     border-color: #b59f3b;
     color: white;
+    animation: reveal 0.3s ease;
 }
 
 .wordle-cell.absent {
     background-color: #3a3a3c;
     border-color: #3a3a3c;
     color: white;
+    animation: reveal 0.3s ease;
+}
+
+@keyframes reveal {
+    0% {
+        transform: rotateX(-90deg);
+    }
+    100% {
+        transform: rotateX(0deg);
+    }
 }
 
 .game-over {
     text-align: center;
-    margin-top: 20px;
-    color: white;
+    padding: 24px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+    width: 100%;
+}
+
+.game-over p {
+    font-size: 20px;
+    margin-bottom: 16px;
+    font-weight: 500;
 }
 
 .game-over button {
-    margin-top: 10px;
-    padding: 8px 16px;
+    padding: 12px 24px;
     background-color: #538d4e;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
 
 .game-over button:hover {
     background-color: #467c42;
+    transform: translateY(-1px);
 }
 
 .keyboard {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-top: 20px;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
+    padding: 8px;
 }
 
 .keyboard-row {
@@ -136,40 +189,74 @@
 }
 
 .keyboard-key {
-    min-width: 40px;
+    min-width: 43px;
     height: 58px;
-    border-radius: 4px;
+    border-radius: 8px;
     border: none;
     background-color: #818384;
     color: white;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 700;
     cursor: pointer;
     text-transform: uppercase;
     display: flex;
     justify-content: center;
     align-items: center;
     user-select: none;
-    transition: background-color 0.15s ease;
+    transition: all 0.15s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .keyboard-key:hover {
     background-color: #6e6e6f;
+    transform: translateY(-1px);
+}
+
+.keyboard-key:active {
+    transform: translateY(1px);
 }
 
 .keyboard-key.wide-key {
-    min-width: 65px;
-    font-size: 12px;
+    min-width: 72px;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 .keyboard-key.correct {
     background-color: #538d4e;
+    box-shadow: 0 1px 3px rgba(83, 141, 78, 0.3);
 }
 
 .keyboard-key.present {
     background-color: #b59f3b;
+    box-shadow: 0 1px 3px rgba(181, 159, 59, 0.3);
 }
 
 .keyboard-key.absent {
     background-color: #3a3a3c;
+    box-shadow: 0 1px 3px rgba(58, 58, 60, 0.3);
+}
+
+@media (max-width: 500px) {
+    .wordle-game {
+        padding: 16px;
+        border-radius: 0;
+    }
+
+    .wordle-cell {
+        width: 54px;
+        height: 54px;
+        font-size: 28px;
+    }
+
+    .keyboard-key {
+        min-width: 32px;
+        height: 52px;
+        font-size: 13px;
+    }
+
+    .keyboard-key.wide-key {
+        min-width: 64px;
+        font-size: 12px;
+    }
 } 

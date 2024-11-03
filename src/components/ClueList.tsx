@@ -26,7 +26,7 @@ const ClueList = forwardRef<HTMLDivElement, ClueListProps>(({ clues, onClueClick
             onClick={() => onClueClick(number, type)}
           >
             <span className="clue-number">{number}</span>
-            <span className="clue-text">{isHardMode ? clue.hard : clue.easy}</span>
+            <span className="clue-text" dangerouslySetInnerHTML={{ __html: isHardMode ? clue.hard : clue.easy }} />
           </div>
         ))}
       </div>

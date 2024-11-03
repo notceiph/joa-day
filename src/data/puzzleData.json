@@ -20,105 +20,105 @@
   "clues": {
     "across": {
       "2": {
-        "easy": "What is Zeri's Q called?",
-        "hard": "Rapid electrical shot from a charged-up sharpshooter. ⚡🏃‍♀️",
+        "easy": "<i style='font-weight: 300'>Skill.</i> What is Zeri's Q called?",
+        "hard": "<i style='font-weight: 300'>Skill.</i> Rapid electrical shot from a charged-up sharpshooter. ⚡🏃‍♀️",
         "answer": "BURST"
       },
       "4": {
-        "easy": "What symbolizes Zeri's connection to her community?",
-        "hard": "This item symbolizes the electrifying bond between a sharpshooter and her neighborhood. ⚡🏃‍♀️",
+        "easy": "<i style='font-weight: 300'>Item.</i> What symbolizes Zeri's connection to her community?",
+        "hard": "<i style='font-weight: 300'>Item.</i> This item symbolizes the electrifying bond between a sharpshooter and her neighborhood. ⚡🏃‍♀️",
         "answer": "JACKET"
       },
       "5": {
-        "easy": "Favorite Jinx Skin?",
-        "hard": "Her cosmic ensemble, where chaos meets celestial duty. 💣🚀",
+        "easy": "<i style='font-weight: 300'>Skin.</i> Favorite Jinx Skin?",
+        "hard": "<i style='font-weight: 300'>Skin.</i> Her cosmic ensemble, where chaos meets celestial duty. 💣🚀",
         "answer": "STAR"
       },
       "6": {
-        "easy": "What is Zeri's first skin?",
-        "hard": "First bloom of Zeri in a special guise, but not quite lively. ⚡🏃‍♀️",
+        "easy": "<i style='font-weight: 300'>Skin.</i> What is Zeri's first skin?",
+        "hard": "<i style='font-weight: 300'>Skin.</i> First bloom of Zeri in a special guise, but not quite lively. ⚡🏃‍♀️",
         "answer": "WITHERED"
       },
       "9": {
-        "easy": "What city is Jinx from?",
-        "hard": "The bustling city of progress, where a certain chaotic marksman hails from. 💣🚀",
+        "easy": "<i style='font-weight: 300'>Place.</i> What city is Jinx from?",
+        "hard": "<i style='font-weight: 300'>Place.</i> The bustling city of progress, where a certain chaotic marksman hails from. 💣🚀",
         "answer": "PILTOVER"
       },
       "10": {
-        "easy": "Where is Zeri from?",
-        "hard": "Underground city, home of a certain electric marksman. ⚡🏃‍♀️",
+        "easy": "<i style='font-weight: 300'>Place.</i> Where is Zeri from?",
+        "hard": "<i style='font-weight: 300'>Place.</i> Underground city, home of a certain electric marksman. ⚡🏃‍♀️",
         "answer": "ZAUN"
       },
       "13": {
-        "easy": "What Mastery level are you on Zyra?",
-        "hard": "An impressive mastery milestone for the garden's keeper. 🌿🌺",
+        "easy": "<i style='font-weight: 300'>Number.</i> What Mastery level are you on Zyra?",
+        "hard": "<i style='font-weight: 300'>Number.</i> An impressive mastery milestone for the garden's keeper. 🌿🌺",
         "answer": "TWONINE"
       },
       "14": {
-        "easy": "What emotion does Nilah suppress to harness her power?",
-        "hard": "The emotion tucked away to forge strength and summon joyous prowess. 💧⚔️",
+        "easy": "<i style='font-weight: 300'>Sorrow.</i> What emotion does Nilah suppress to harness her power?",
+        "hard": "<i style='font-weight: 300'>Sorrow.</i> The emotion tucked away to forge strength and summon joyous prowess. 💧⚔️",
         "answer": "SADNESS"
       },
       "15": {
-        "easy": "Zyra E - _____ Roots.",
-        "hard": "Roots that ensnare foes, part of the thorny queen's lethal embrace. 🌿🌺",
+        "easy": "<i style='font-weight: 300'>Skill.</i> Zyra E - _____ Roots.",
+        "hard": "<i style='font-weight: 300'>Skill.</i> Roots that ensnare foes, part of the thorny queen's lethal embrace. 🌿🌺",
         "answer": "GRASPING"
       },
       "17": {
-        "easy": "How many skins does Zyra have? The current last is Blood Moon.",
-        "hard": "Amidst the League's wild flora, how many times does this plant queen change her attire? 🌿🌺",
+        "easy": "<i style='font-weight: 300'>Number.</i> How many skins does Zyra have? The current last is Blood Moon.",
+        "hard": "<i style='font-weight: 300'>Number.</i> Amidst the League's wild flora, how many times does this plant queen change her attire? 🌿🌺",
         "answer": "ELEVEN"
       },
       "18": {
-        "easy": "Ahri R - ____ Rush.",
-        "hard": "The fox's ethereal force that propels her ultimate dash across the battlefield. 🦊💖",
+        "easy": "<i style='font-weight: 300'>Skill.</i> Ahri R - ____ Rush.",
+        "hard": "<i style='font-weight: 300'>Skill.</i> The fox's ethereal force that propels her ultimate dash across the battlefield. 🦊💖",
         "answer": "SPIRIT"
       }
     },
     "down": {
       "1": {
-        "easy": "Ahri's Love",
-        "hard": "The fox's captivating allure that makes her foes swoon and become admirers. 🦊💖",
+        "easy": "<i style='font-weight: 300'>Skill.</i> Ahri's Love",
+        "hard": "<i style='font-weight: 300'>Skill.</i> The fox's captivating allure that makes her foes swoon and become admirers. 🦊💖",
         "answer": "CHARM"
       },
       "2": {
-        "easy": "Favorite Ahri Skin?",
-        "hard": "Your favored attire of the cunning fox, where ethereal beauty meets floral grace. 🦊💖",
+        "easy": "<i style='font-weight: 300'>Skin.</i> Favorite Ahri Skin?",
+        "hard": "<i style='font-weight: 300'>Skin.</i> Your favored attire of the cunning fox, where ethereal beauty meets floral grace. 🦊💖",
         "answer": "BLOSSOM"
       },
       "3": {
-        "easy": "What weapon does Nilah use?",
-        "hard": "A flexible tool in the hands of an exuberant warrior, often used to dance through battles. 💧⚔️",
+        "easy": "<i style='font-weight: 300'>Weapon.</i> What weapon does Nilah use?",
+        "hard": "<i style='font-weight: 300'>Weapon.</i> A flexible tool in the hands of an exuberant warrior, often used to dance through battles. 💧⚔️",
         "answer": "WHIP"
       },
       "5": {
-        "easy": "What is Jinx's Ult?",
-        "hard": "The ultimate in destructive delivery, launched with a bang by a manic gunner. 💣🚀",
+        "easy": "<i style='font-weight: 300'>Skill.</i> What is Jinx's Ult?",
+        "hard": "<i style='font-weight: 300'>Skill.</i> The ultimate in destructive delivery, launched with a bang by a manic gunner. 💣🚀",
         "answer": "SUPERMEGADEATH"
       },
       "8": {
-        "easy": "What region is Nilah closely associated with?",
-        "hard": "The treacherous port town linked with a joyful swordswoman. 💧⚔️",
+        "easy": "<i style='font-weight: 300'>Place.</i> What region is Nilah closely associated with?",
+        "hard": "<i style='font-weight: 300'>Place.</i> The treacherous port town linked with a joyful swordswoman. 💧⚔️",
         "answer": "BILGE"
       },
       "11": {
-        "easy": "Your favorite Nilah skin?",
-        "hard": "A mystical attire worn by Nilah, hinting at gatherings beneath the moonlit sky. 💧⚔️",
+        "easy": "<i style='font-weight: 300'>Skin.</i> Your favorite Nilah skin?",
+        "hard": "<i style='font-weight: 300'>Skin.</i> A mystical attire worn by Nilah, hinting at gatherings beneath the moonlit sky. 💧⚔️",
         "answer": "COVEN"
       },
       "12": {
-        "easy": "What is Jinx's rocket launcher called?",
-        "hard": "Her explosive companion, a rocket launcher that's as quirky and unpredictable as the blue-haired gunner herself. 💣🚀",
+        "easy": "<i style='font-weight: 300'>Weapon.</i> What is Jinx's rocket launcher called?",
+        "hard": "<i style='font-weight: 300'>Weapon.</i> Her explosive companion, a rocket launcher that's as quirky and unpredictable as the blue-haired gunner herself. 💣🚀",
         "answer": "FISHBONES"
       },
       "16": {
-        "easy": "Where is Ahri from?",
-        "hard": "A mystical land steeped in magic, where our enchanting fox emerged. 🦊💖",
+        "easy": "<i style='font-weight: 300'>Place.</i> Where is Ahri from?",
+        "hard": "<i style='font-weight: 300'>Place.</i> A mystical land steeped in magic, where our enchanting fox emerged. 🦊💖",
         "answer": "IONIA"
       },
       "7": {
-        "easy": "What is Zyra's first skin?",
-        "hard": "Her initial transformation for the thorny enchantress, draped in eerie charm. 🌿🌺",
+        "easy": "<i style='font-weight: 300'>Skin.</i> What is Zyra's first skin?",
+        "hard": "<i style='font-weight: 300'>Skin.</i> Her initial transformation for the thorny enchantress, draped in eerie charm. 🌿🌺",
         "answer": "HAUNTED"
       }
     }

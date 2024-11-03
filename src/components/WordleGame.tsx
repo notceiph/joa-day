@@ -29,6 +29,8 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
     const [flipAnimations, setFlipAnimations] = useState<boolean[][]>(
         Array(MAX_ATTEMPTS).fill([]).map(() => Array(WORD_LENGTH).fill(false))
     );
+    const [completedGuesses, setCompletedGuesses] = useState<string[]>([]);
+    const [showMiniDisplay, setShowMiniDisplay] = useState(false);
 
     useEffect(() => {
         const randomWord = WORDS[Math.floor(Math.random() * WORDS.length)];
@@ -61,10 +63,9 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
                     newAnimations[currentAttempt][i] = true;
                     return newAnimations;
                 });
-            }, i * 200); // Delay each flip by 200ms
+            }, i * 200);
         }
 
-        // Update used letters status after a slight delay
         setTimeout(() => {
             const newUsedLetters = { ...usedLetters };
             for (let i = 0; i < currentGuess.length; i++) {
@@ -80,15 +81,15 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
 
             if (currentGuess === targetWord) {
                 setGameStatus('won');
-                onClose(true);
+                setCompletedGuesses(prev => [...prev, currentGuess]);
+                setShowMiniDisplay(true);
             } else if (currentAttempt === MAX_ATTEMPTS - 1) {
                 setGameStatus('lost');
-                onClose(false);
             } else {
                 setCurrentAttempt(prev => prev + 1);
                 setCurrentGuess('');
             }
-        }, WORD_LENGTH * 200); // Wait for all flips to complete
+        }, WORD_LENGTH * 200);
     };
 
     const getLetterStatus = (letter: string, position: number, guess: string) => {
@@ -122,8 +123,26 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
         </div>
     );
 
+    const renderMiniDisplay = () => (
+        <div className={`mini-display ${showMiniDisplay ? 'show' : ''}`}>
+            {completedGuesses.map((guess, index) => (
+                <div key={index} className="mini-wordle-row">
+                    {guess.split('').map((letter, i) => (
+                        <div 
+                            key={i}
+                            className={`mini-wordle-cell ${getLetterStatus(letter, i, guess)}`}
+                        >
+                            {letter}
+                        </div>
+                    ))}
+                </div>
+            ))}
+        </div>
+    );
+
     return (
         <div className="wordle-game">
+            {renderMiniDisplay()}
             <div className="wordle-header">
                 <h2>Wordle Game {index + 1}</h2>
                 <button onClick={() => onClose(false)} className="close-button">×</button>

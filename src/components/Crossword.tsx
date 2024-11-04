@@ -154,16 +154,38 @@ const Crossword: React.FC = () => {
     return null;
   };
 
-  const handleCellClick = (row: number, col: number) => {
+  const handleCellClick = useCallback((row: number, col: number) => {
+    if (!puzzle || puzzle.grid[row][col] === '#') return;
+
+    // If clicking the same cell, toggle direction
     if (selectedCell && selectedCell[0] === row && selectedCell[1] === col) {
-      const newDirection = direction === 'across' ? 'down' : 'across';
-      setDirection(newDirection);
-      updateSelectedClue(row, col, newDirection);
-    } else {
-      setSelectedCell([row, col]);
-      updateSelectedClue(row, col, direction);
+      setDirection(prev => prev === 'across' ? 'down' : 'across');
+      return;
     }
-  };
+
+    // Check if the clicked cell has a number
+    const cellValue = puzzle.grid[row][col];
+    const hasNumber = cellValue !== '.' && !isNaN(Number(cellValue));
+    
+    if (hasNumber) {
+      // Check if this number starts both across and down clues
+      const number = cellValue;
+      const hasAcross = puzzle.clues.across[number];
+      const hasDown = puzzle.clues.down[number];
+
+      if (hasAcross && hasDown) {
+        // If both directions are available, prefer the current direction
+        // If no current direction (first click), default to across
+        setDirection(prev => prev || 'across');
+      } else if (hasAcross) {
+        setDirection('across');
+      } else if (hasDown) {
+        setDirection('down');
+      }
+    }
+
+    setSelectedCell([row, col]);
+  }, [puzzle, selectedCell]);
 
   const updateSelectedClue = (row: number, col: number, currentDirection: ClueType) => {
     if (!puzzle) return;
@@ -263,33 +285,43 @@ const Crossword: React.FC = () => {
   };
 
   const getCurrentWordCells = useCallback(() => {
-    if (!puzzle || !selectedCell) return [];
+    if (!selectedCell || !puzzle) return [];
 
     const [row, col] = selectedCell;
-    const cells: [number, number][] = [[row, col]];
-
+    const cells: [number, number][] = [];
+    
+    // Find the starting cell of the current word
+    let startRow = row;
+    let startCol = col;
+    
     if (direction === 'across') {
-      // Check left
-      for (let j = col - 1; j >= 0 && puzzle.grid[row][j] !== '#'; j--) {
-        cells.unshift([row, j]);
+      // Move left until we hit a black cell or the edge
+      while (startCol > 0 && puzzle.grid[row][startCol - 1] !== '#') {
+        startCol--;
       }
-      // Check right
-      for (let j = col + 1; j < puzzle.grid[row].length && puzzle.grid[row][j] !== '#'; j++) {
-        cells.push([row, j]);
+      
+      // Collect all cells from start to end
+      let currentCol = startCol;
+      while (currentCol < puzzle.grid[row].length && puzzle.grid[row][currentCol] !== '#') {
+        cells.push([row, currentCol]);
+        currentCol++;
       }
     } else {
-      // Check up
-      for (let i = row - 1; i >= 0 && puzzle.grid[i][col] !== '#'; i--) {
-        cells.unshift([i, col]);
+      // Move up until we hit a black cell or the edge
+      while (startRow > 0 && puzzle.grid[startRow - 1][col] !== '#') {
+        startRow--;
       }
-      // Check down
-      for (let i = row + 1; i < puzzle.grid.length && puzzle.grid[i][col] !== '#'; i++) {
-        cells.push([i, col]);
+      
+      // Collect all cells from start to end
+      let currentRow = startRow;
+      while (currentRow < puzzle.grid.length && puzzle.grid[currentRow][col] !== '#') {
+        cells.push([currentRow, col]);
+        currentRow++;
       }
     }
 
     return cells;
-  }, [puzzle, selectedCell, direction]);
+  }, [selectedCell, puzzle, direction]);
 
   const scrollToClue = (number: string, type: ClueType) => {
     if (clueListRef.current) {

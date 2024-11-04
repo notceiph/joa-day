@@ -256,6 +256,21 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onS
         }
     };
 
+    // Add this new render function
+    const renderProgressBlocks = () => (
+        <div className="progress-blocks">
+            {WORDS.map((_, index) => (
+                <div 
+                    key={index} 
+                    className={`progress-block ${
+                        index < currentWordIndex ? 'completed' : 
+                        index === currentWordIndex ? 'current' : ''
+                    }`}
+                />
+            ))}
+        </div>
+    );
+
     return (
         <div className="wordle-game">
             {renderCompletedWords()}
@@ -265,6 +280,9 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onS
                     <span className="word-hint">{getWordHint()}</span>
                 </div>
                 <button onClick={() => onClose(false)} className="close-button">×</button>
+            </div>
+            <div className="progress-blocks-container">
+                {renderProgressBlocks()}
             </div>
             <div className="wordle-grid">
                 {guesses.map((guess, i) => (

@@ -4,6 +4,8 @@ import '../styles/WordleGame.css';
 interface WordleGameProps {
     index: number;
     onClose: (completed: boolean) => void;
+    savedState?: WordleGameState;
+    onStateChange?: (state: WordleGameState) => void;
 }
 
 const WORDS = [
@@ -27,21 +29,59 @@ interface WordHistory {
     guesses: string[];
 }
 
-const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
-    const [targetWord, setTargetWord] = useState<string>('');
-    const [wordLength, setWordLength] = useState<number>(0);
-    const [guesses, setGuesses] = useState<string[]>([]);
-    const [currentAttempt, setCurrentAttempt] = useState<number>(0);
-    const [currentGuess, setCurrentGuess] = useState<string>('');
-    const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>('playing');
-    const [usedLetters, setUsedLetters] = useState<{ [key: string]: string }>({});
-    const [flipAnimations, setFlipAnimations] = useState<boolean[][]>([]);
-    const [completedWords, setCompletedWords] = useState<WordHistory[]>([]);
-    const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
-    const [availableWords, setAvailableWords] = useState<string[]>([...WORDS]);
+// Add this interface near the top with other interfaces
+interface WordleGameState {
+    targetWord: string;
+    wordLength: number;
+    guesses: string[];
+    currentAttempt: number;
+    currentGuess: string;
+    gameStatus: 'playing' | 'won' | 'lost';
+    usedLetters: { [key: string]: string };
+    flipAnimations: boolean[][];
+    completedWords: WordHistory[];
+    currentWordIndex: number;
+    availableWords: string[];
+}
 
+const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onStateChange }) => {
+    // Update state initializations to use savedState if available
+    const [targetWord, setTargetWord] = useState<string>(savedState?.targetWord || '');
+    const [wordLength, setWordLength] = useState<number>(savedState?.wordLength || 0);
+    const [guesses, setGuesses] = useState<string[]>(savedState?.guesses || []);
+    const [currentAttempt, setCurrentAttempt] = useState<number>(savedState?.currentAttempt || 0);
+    const [currentGuess, setCurrentGuess] = useState<string>(savedState?.currentGuess || '');
+    const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>(savedState?.gameStatus || 'playing');
+    const [usedLetters, setUsedLetters] = useState<{ [key: string]: string }>(savedState?.usedLetters || {});
+    const [flipAnimations, setFlipAnimations] = useState<boolean[][]>(savedState?.flipAnimations || []);
+    const [completedWords, setCompletedWords] = useState<WordHistory[]>(savedState?.completedWords || []);
+    const [currentWordIndex, setCurrentWordIndex] = useState<number>(savedState?.currentWordIndex || 0);
+    const [availableWords, setAvailableWords] = useState<string[]>(savedState?.availableWords || [...WORDS]);
+
+    // Add effect to save state when it changes
     useEffect(() => {
-        selectNewWord();
+        if (onStateChange) {
+            onStateChange({
+                targetWord,
+                wordLength,
+                guesses,
+                currentAttempt,
+                currentGuess,
+                gameStatus,
+                usedLetters,
+                flipAnimations,
+                completedWords,
+                currentWordIndex,
+                availableWords
+            });
+        }
+    }, [targetWord, wordLength, guesses, currentAttempt, currentGuess, gameStatus, usedLetters, flipAnimations, completedWords, currentWordIndex, availableWords]);
+
+    // Only call selectNewWord if there's no saved state
+    useEffect(() => {
+        if (!savedState) {
+            selectNewWord();
+        }
     }, []);
 
     const selectNewWord = () => {

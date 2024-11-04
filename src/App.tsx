@@ -5,14 +5,18 @@ import './App.css';
 
 const App: React.FC = () => {
   const [currentGame, setCurrentGame] = useState<'crossword' | 'wordle'>('crossword');
+  const [wordleState, setWordleState] = useState<any>(null); // Store Wordle game state
 
   const handleGameSwitch = () => {
     setCurrentGame(currentGame === 'crossword' ? 'wordle' : 'crossword');
   };
 
   const handleWordleClose = (completed: boolean) => {
-    // You can handle the completion status here if needed
     setCurrentGame('crossword');
+  };
+
+  const handleWordleStateChange = (newState: any) => {
+    setWordleState(newState);
   };
 
   return (
@@ -32,6 +36,8 @@ const App: React.FC = () => {
         <WordleGame 
           index={0} 
           onClose={handleWordleClose}
+          savedState={wordleState}
+          onStateChange={handleWordleStateChange}
         />
       )}
     </div>

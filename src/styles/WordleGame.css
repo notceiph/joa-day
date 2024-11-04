@@ -57,16 +57,18 @@
 .wordle-row {
     display: flex;
     gap: 6px;
+    justify-content: center;
+    width: 100%;
 }
 
 .wordle-cell {
-    width: 62px;
-    height: 62px;
+    width: 52px;
+    height: 52px;
     border: 2px solid #3a3a3c;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 700;
     text-transform: uppercase;
     background-color: transparent;
@@ -246,9 +248,9 @@
     }
 
     .wordle-cell {
-        width: 54px;
-        height: 54px;
-        font-size: 28px;
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
     }
 
     .keyboard-key {

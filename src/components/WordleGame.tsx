@@ -6,12 +6,14 @@ interface WordleGameProps {
     onClose: (completed: boolean) => void;
 }
 
-const WORD_LENGTH = 5;
-const MAX_ATTEMPTS = 6;
 const WORDS = [
     "HAPPY", "SMILE", "LAUGH", "DANCE", "SHINE",
-    "DREAM", "HEART", "SWEET", "PEACE", "LIGHT"
+    "DREAM", "HEART", "SWEET", "PEACE", "LIGHT",
+    "BIRTHDAY", "CELEBRATE", "WONDERFUL", "FANTASTIC",
+    "JOYFUL", "AMAZING", "SPECIAL", "BLESSED"
 ];
+
+const MAX_ATTEMPTS = 6;
 
 const KEYBOARD_ROWS = [
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
@@ -27,16 +29,13 @@ interface WordHistory {
 
 const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
     const [targetWord, setTargetWord] = useState<string>('');
-    const [guesses, setGuesses] = useState<string[]>(Array(MAX_ATTEMPTS).fill(''));
+    const [wordLength, setWordLength] = useState<number>(0);
+    const [guesses, setGuesses] = useState<string[]>([]);
     const [currentAttempt, setCurrentAttempt] = useState<number>(0);
     const [currentGuess, setCurrentGuess] = useState<string>('');
     const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>('playing');
     const [usedLetters, setUsedLetters] = useState<{ [key: string]: string }>({});
-    const [flipAnimations, setFlipAnimations] = useState<boolean[][]>(
-        Array(MAX_ATTEMPTS).fill([]).map(() => Array(WORD_LENGTH).fill(false))
-    );
-    const [completedGuesses, setCompletedGuesses] = useState<string[]>([]);
-    const [showMiniDisplay, setShowMiniDisplay] = useState(false);
+    const [flipAnimations, setFlipAnimations] = useState<boolean[][]>([]);
     const [completedWords, setCompletedWords] = useState<WordHistory[]>([]);
     const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
     const [availableWords, setAvailableWords] = useState<string[]>([...WORDS]);
@@ -47,7 +46,6 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
 
     const selectNewWord = () => {
         if (availableWords.length === 0) {
-            // All words completed
             onClose(true);
             return;
         }
@@ -55,8 +53,13 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
         const randomIndex = Math.floor(Math.random() * availableWords.length);
         const selectedWord = availableWords[randomIndex];
         setTargetWord(selectedWord);
+        setWordLength(selectedWord.length);
         
-        // Remove the selected word from available words
+        setGuesses(Array(MAX_ATTEMPTS).fill(''));
+        setFlipAnimations(
+            Array(MAX_ATTEMPTS).fill([]).map(() => Array(selectedWord.length).fill(false))
+        );
+        
         setAvailableWords(prev => prev.filter((_, i) => i !== randomIndex));
     };
 
@@ -75,8 +78,7 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
         setCurrentGuess('');
         setGameStatus('playing');
         setUsedLetters({});
-        setFlipAnimations(Array(MAX_ATTEMPTS).fill([]).map(() => Array(WORD_LENGTH).fill(false)));
-        setShowMiniDisplay(true);
+        setFlipAnimations(Array(MAX_ATTEMPTS).fill([]).map(() => Array(wordLength).fill(false)));
 
         // Select next word
         selectNewWord();
@@ -87,9 +89,9 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
 
         if (key === '⌫' || key === 'Backspace') {
             setCurrentGuess(prev => prev.slice(0, -1));
-        } else if ((key === 'ENTER' || key === 'Enter') && currentGuess.length === WORD_LENGTH) {
+        } else if ((key === 'ENTER' || key === 'Enter') && currentGuess.length === wordLength) {
             submitGuess();
-        } else if (/^[A-Za-z]$/.test(key) && currentGuess.length < WORD_LENGTH) {
+        } else if (/^[A-Za-z]$/.test(key) && currentGuess.length < wordLength) {
             setCurrentGuess(prev => (prev + key).toUpperCase());
         }
     };
@@ -100,7 +102,7 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
         setGuesses(newGuesses);
 
         // Trigger flip animations sequentially
-        for (let i = 0; i < WORD_LENGTH; i++) {
+        for (let i = 0; i < wordLength; i++) {
             setTimeout(() => {
                 setFlipAnimations(prev => {
                     const newAnimations = [...prev];
@@ -137,7 +139,7 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
                 setCurrentAttempt(prev => prev + 1);
                 setCurrentGuess('');
             }
-        }, WORD_LENGTH * 200);
+        }, wordLength * 200);
     };
 
     const getLetterStatus = (letter: string, position: number, guess: string) => {
@@ -198,7 +200,7 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
             <div className="wordle-grid">
                 {guesses.map((guess, i) => (
                     <div key={i} className="wordle-row">
-                        {Array(WORD_LENGTH).fill(0).map((_, j) => {
+                        {Array(wordLength).fill(0).map((_, j) => {
                             const letter = i === currentAttempt ? currentGuess[j] : guess[j];
                             const status = i < currentAttempt ? getLetterStatus(letter, j, guess) : 'empty';
                             const shouldFlip = flipAnimations[i][j];

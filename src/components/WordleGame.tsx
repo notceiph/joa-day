@@ -19,6 +19,12 @@ const KEYBOARD_ROWS = [
     ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '⌫']
 ];
 
+// Add this interface for tracking word history
+interface WordHistory {
+    word: string;
+    guesses: string[];
+}
+
 const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
     const [targetWord, setTargetWord] = useState<string>('');
     const [guesses, setGuesses] = useState<string[]>(Array(MAX_ATTEMPTS).fill(''));
@@ -31,11 +37,50 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
     );
     const [completedGuesses, setCompletedGuesses] = useState<string[]>([]);
     const [showMiniDisplay, setShowMiniDisplay] = useState(false);
+    const [completedWords, setCompletedWords] = useState<WordHistory[]>([]);
+    const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
+    const [availableWords, setAvailableWords] = useState<string[]>([...WORDS]);
 
     useEffect(() => {
-        const randomWord = WORDS[Math.floor(Math.random() * WORDS.length)];
-        setTargetWord(randomWord);
+        selectNewWord();
     }, []);
+
+    const selectNewWord = () => {
+        if (availableWords.length === 0) {
+            // All words completed
+            onClose(true);
+            return;
+        }
+
+        const randomIndex = Math.floor(Math.random() * availableWords.length);
+        const selectedWord = availableWords[randomIndex];
+        setTargetWord(selectedWord);
+        
+        // Remove the selected word from available words
+        setAvailableWords(prev => prev.filter((_, i) => i !== randomIndex));
+    };
+
+    const moveToNextWord = () => {
+        // Store only the correct guess for the completed word
+        const wordHistory: WordHistory = {
+            word: targetWord,
+            guesses: [currentGuess] // Only store the successful guess
+        };
+        setCompletedWords(prev => [...prev, wordHistory]);
+
+        // Reset game state for next word
+        setCurrentWordIndex(prev => prev + 1);
+        setGuesses(Array(MAX_ATTEMPTS).fill(''));
+        setCurrentAttempt(0);
+        setCurrentGuess('');
+        setGameStatus('playing');
+        setUsedLetters({});
+        setFlipAnimations(Array(MAX_ATTEMPTS).fill([]).map(() => Array(WORD_LENGTH).fill(false)));
+        setShowMiniDisplay(true);
+
+        // Select next word
+        selectNewWord();
+    };
 
     const handleKeyPress = (key: string) => {
         if (gameStatus !== 'playing') return;
@@ -80,9 +125,12 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
             setUsedLetters(newUsedLetters);
 
             if (currentGuess === targetWord) {
-                setGameStatus('won');
-                setCompletedGuesses(prev => [...prev, currentGuess]);
-                setShowMiniDisplay(true);
+                if (availableWords.length > 0) {
+                    // If there are more words, move to next word after a delay
+                    setTimeout(() => moveToNextWord(), 1500);
+                } else {
+                    setGameStatus('won');
+                }
             } else if (currentAttempt === MAX_ATTEMPTS - 1) {
                 setGameStatus('lost');
             } else {
@@ -123,18 +171,21 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
         </div>
     );
 
-    const renderMiniDisplay = () => (
-        <div className={`mini-display ${showMiniDisplay ? 'show' : ''}`}>
-            {completedGuesses.map((guess, index) => (
-                <div key={index} className="mini-wordle-row">
-                    {guess.split('').map((letter, i) => (
-                        <div 
-                            key={i}
-                            className={`mini-wordle-cell ${getLetterStatus(letter, i, guess)}`}
-                        >
-                            {letter}
-                        </div>
-                    ))}
+    const renderCompletedWords = () => (
+        <div className="completed-words">
+            {completedWords.map((wordHistory, index) => (
+                <div key={index} className="completed-word-container">
+                    <div className="completed-word-header">Word {index + 1}</div>
+                    <div className="mini-wordle-row">
+                        {wordHistory.word.split('').map((letter, i) => (
+                            <div 
+                                key={i}
+                                className="mini-wordle-cell correct"
+                            >
+                                {letter}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             ))}
         </div>
@@ -142,9 +193,9 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose }) => {
 
     return (
         <div className="wordle-game">
-            {renderMiniDisplay()}
+            {renderCompletedWords()}
             <div className="wordle-header">
-                <h2>Wordle Game {index + 1}</h2>
+                <h2>Wordle Game {currentWordIndex + 1}</h2>
                 <button onClick={() => onClose(false)} className="close-button">×</button>
             </div>
             <div className="wordle-grid">

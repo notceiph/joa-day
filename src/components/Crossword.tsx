@@ -19,6 +19,7 @@ const CrosswordProvider: React.FC<{ children: React.ReactNode }> = ({ children }
   const [correctAnswersCount, setCorrectAnswersCount] = useState<number>(0); // New state for correct answers
   const totalCluesCount = Object.keys(puzzleData.clues.across).length + Object.keys(puzzleData.clues.down).length; // Total clues
   const [incorrectCells, setIncorrectCells] = useState<[number, number][]>([]);
+  const [modalMessage, setModalMessage] = useState<string | null>(null);
 
   useEffect(() => {
     setPuzzle(puzzleData);
@@ -45,6 +46,8 @@ const CrosswordProvider: React.FC<{ children: React.ReactNode }> = ({ children }
       totalCluesCount, // Provide total clues count
       incorrectCells,
       setIncorrectCells,
+      modalMessage,
+      setModalMessage,
     }}>
       {children}
     </CrosswordContext.Provider>
@@ -69,6 +72,8 @@ const Crossword: React.FC = () => {
     totalCluesCount,
     incorrectCells,
     setIncorrectCells,
+    modalMessage,
+    setModalMessage,
   } = useContext(CrosswordContext);
 
   const clueListRef = useRef<HTMLDivElement>(null);
@@ -257,14 +262,17 @@ const Crossword: React.FC = () => {
     // Update the correct answers count state
     setCorrectAnswersCount(correctCount);
 
-    // Alert the user with the result only if there is input
+    // Show modal message instead of alert
     if (!hasInput) {
-      alert('Please enter some answers before checking!');
+      setModalMessage('Please enter some answers before checking!');
     } else if (incorrectCount === 0) {
-      alert('Congratulations! All answers are correct!');
+      setModalMessage('Congratulations! All answers are correct!');
     } else {
-      alert(`Some answers are incorrect. You have ${incorrectCount} incorrect answer(s). Keep trying!`);
+      setModalMessage(`Some answers are incorrect. You have ${incorrectCount} incorrect answer(s). Keep trying!`);
     }
+
+    // Auto-hide the modal after 3 seconds
+    setTimeout(() => setModalMessage(null), 3000);
   };
 
   const handleClueClick = useCallback((number: string, type: ClueType) => {
@@ -368,7 +376,8 @@ const Crossword: React.FC = () => {
 
     const currentCells = getCurrentWordCells();
     if (currentCells.length === 0) {
-      alert('Please select a word to check');
+      setModalMessage('Please select a word to check');
+      setTimeout(() => setModalMessage(null), 3000);
       return;
     }
 
@@ -395,14 +404,16 @@ const Crossword: React.FC = () => {
     );
 
     if (incorrectPositions.length === 0 && userAnswer.length > 0) {
-      alert('This word is correct!');
+      setModalMessage('This word is correct!');
     } else if (userAnswer.length === 0) {
-      alert('Please enter some letters before checking');
+      setModalMessage('Please enter some letters before checking');
     } else {
-      // Pass incorrect positions to Grid component
+      setModalMessage('Some letters are incorrect. Keep trying!');
       setIncorrectCells(incorrectPositions);
-      setTimeout(() => setIncorrectCells([]), 2000); // Clear after 2 seconds
+      setTimeout(() => setIncorrectCells([]), 2000);
     }
+    
+    setTimeout(() => setModalMessage(null), 3000);
   };
 
   if (!puzzle) return <div>Loading...</div>;
@@ -410,6 +421,11 @@ const Crossword: React.FC = () => {
   return (
     <div onKeyDown={handleKeyDown} tabIndex={0} className="crossword">
       <LoadingBar progress={calculateProgress()} /> {/* Render the loading bar */}
+      {modalMessage && (
+        <div className="feedback-modal">
+          <p>{modalMessage}</p>
+        </div>
+      )}
       <div className="crossword-header">
         <button onClick={checkAnswers} className="check-answers-btn">Check Answers</button>
         <button onClick={checkCurrentWord} className="check-word-btn">Check Word</button>

@@ -215,6 +215,7 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onS
 
     const renderCompletedWords = () => (
         <div className="completed-words">
+            <div className="completed-words-title">Correct Words</div>
             {completedWords.map((wordHistory, index) => (
                 <div key={index} className="mini-wordle-row">
                     {wordHistory.word.split('').map((letter, i) => (

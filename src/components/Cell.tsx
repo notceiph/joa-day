@@ -10,6 +10,7 @@ interface CellProps {
   isSelected: boolean;
   isHighlighted: boolean;
   direction: ClueType;
+  isIncorrect: boolean;
 }
 
 const Cell: React.FC<CellProps> = ({
@@ -19,18 +20,20 @@ const Cell: React.FC<CellProps> = ({
   number,
   isSelected,
   isHighlighted,
-  direction
+  direction,
+  isIncorrect
 }) => {
   if (isBlack) {
     return <div className="cell black"></div>;
   }
 
-  const cellClassName = `cell ${isSelected ? 'selected' : ''} ${isHighlighted ? 'highlighted' : ''} ${direction}`;
+  const cellClassName = `cell ${isSelected ? 'selected' : ''} ${isHighlighted ? 'highlighted' : ''} ${direction} ${isIncorrect ? 'incorrect' : ''}`;
 
   return (
     <div className={cellClassName} onClick={onClick}>
       {number && <span className="cell-number">{number}</span>}
       <div className="cell-content">{value}</div>
+      {isIncorrect && <div className="incorrect-mark">✕</div>}
     </div>
   );
 };

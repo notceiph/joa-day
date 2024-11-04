@@ -64,3 +64,28 @@
 .cell.selected.down {
   background-image: linear-gradient(to bottom, rgba(36, 36, 36, 0.5), rgba(36, 36, 36, 0.5));
 }
+
+.cell.incorrect {
+  position: relative;
+}
+
+.incorrect-mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: red;
+  font-size: 24px;
+  font-weight: bold;
+  pointer-events: none;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -18,6 +18,7 @@ const CrosswordProvider: React.FC<{ children: React.ReactNode }> = ({ children }
   const [isHardMode, setIsHardMode] = useState<boolean>(true); // Set initial difficulty to Hard
   const [correctAnswersCount, setCorrectAnswersCount] = useState<number>(0); // New state for correct answers
   const totalCluesCount = Object.keys(puzzleData.clues.across).length + Object.keys(puzzleData.clues.down).length; // Total clues
+  const [incorrectCells, setIncorrectCells] = useState<[number, number][]>([]);
 
   useEffect(() => {
     setPuzzle(puzzleData);
@@ -42,6 +43,8 @@ const CrosswordProvider: React.FC<{ children: React.ReactNode }> = ({ children }
       correctAnswersCount, // Provide correct answers count
       setCorrectAnswersCount, // Provide setter for correct answers count
       totalCluesCount, // Provide total clues count
+      incorrectCells,
+      setIncorrectCells,
     }}>
       {children}
     </CrosswordContext.Provider>
@@ -64,6 +67,8 @@ const Crossword: React.FC = () => {
     correctAnswersCount,
     setCorrectAnswersCount,
     totalCluesCount,
+    incorrectCells,
+    setIncorrectCells,
   } = useContext(CrosswordContext);
 
   const clueListRef = useRef<HTMLDivElement>(null);
@@ -358,6 +363,48 @@ const Crossword: React.FC = () => {
     }
   };
 
+  const checkCurrentWord = () => {
+    if (!puzzle || !selectedCell || !direction) return;
+
+    const currentCells = getCurrentWordCells();
+    if (currentCells.length === 0) {
+      alert('Please select a word to check');
+      return;
+    }
+
+    // Find the clue number for the current word
+    const [startRow, startCol] = currentCells[0];
+    const clueNumber = findClueNumber(startRow, startCol, direction);
+    const clue = puzzle.clues[direction][clueNumber];
+
+    if (!clue) return;
+
+    // Get the user's answer for the current word
+    let userAnswer = '';
+    if (direction === 'across') {
+      userAnswer = currentCells.map(([row, col]) => userAnswers[row][col]).join('');
+    } else {
+      userAnswer = currentCells.map(([row, col]) => userAnswers[row][col]).join('');
+    }
+
+    // Compare with correct answer and mark incorrect letters
+    const correctAnswer = clue.answer;
+    const incorrectPositions = currentCells.filter((_, index) => 
+      userAnswer[index]?.toUpperCase() !== correctAnswer[index]?.toUpperCase() && 
+      userAnswer[index] !== ''
+    );
+
+    if (incorrectPositions.length === 0 && userAnswer.length > 0) {
+      alert('This word is correct!');
+    } else if (userAnswer.length === 0) {
+      alert('Please enter some letters before checking');
+    } else {
+      // Pass incorrect positions to Grid component
+      setIncorrectCells(incorrectPositions);
+      setTimeout(() => setIncorrectCells([]), 2000); // Clear after 2 seconds
+    }
+  };
+
   if (!puzzle) return <div>Loading...</div>;
 
   return (
@@ -365,6 +412,7 @@ const Crossword: React.FC = () => {
       <LoadingBar progress={calculateProgress()} /> {/* Render the loading bar */}
       <div className="crossword-header">
         <button onClick={checkAnswers} className="check-answers-btn">Check Answers</button>
+        <button onClick={checkCurrentWord} className="check-word-btn">Check Word</button>
         <button onClick={toggleDifficulty} className="difficulty-toggle">
           {isHardMode ? 'Hard' : 'Easy'}
         </button>
@@ -387,6 +435,7 @@ const Crossword: React.FC = () => {
           selectedCell={selectedCell}
           currentWordCells={getCurrentWordCells()}
           direction={direction}
+          incorrectCells={incorrectCells}
         />
       </div>
     </div>

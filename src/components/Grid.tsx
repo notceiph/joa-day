@@ -12,6 +12,7 @@ interface GridProps {
   selectedCell: [number, number] | null;
   currentWordCells: [number, number][];
   direction: ClueType;
+  incorrectCells: [number, number][];
 }
 
 const Grid: React.FC<GridProps> = ({
@@ -22,7 +23,8 @@ const Grid: React.FC<GridProps> = ({
   onCellClick,
   selectedCell,
   currentWordCells,
-  direction
+  direction,
+  incorrectCells
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -110,6 +112,7 @@ const Grid: React.FC<GridProps> = ({
                 isSelected={selectedCell ? selectedCell[0] === rowIndex && selectedCell[1] === colIndex : false}
                 isHighlighted={isHighlighted(rowIndex, colIndex)}
                 direction={direction}
+                isIncorrect={incorrectCells.some(([row, col]) => row === rowIndex && col === colIndex)}
               />
             ))}
           </div>

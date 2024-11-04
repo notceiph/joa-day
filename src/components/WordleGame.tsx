@@ -9,13 +9,13 @@ interface WordleGameProps {
 }
 
 const WORDS = [
-    "HAPPY", "SMILE", "LAUGH", "DANCE", "SHINE",
-    "DREAM", "HEART", "SWEET", "PEACE", "LIGHT",
+    "ELI", "PAUL", "SLEEP", "TEXAS", "VOICE",
+    "YAPPER", "BURRITO", "SWEET", "PEACE", "LIGHT",
     "BIRTHDAY", "CELEBRATE", "WONDERFUL", "FANTASTIC",
     "JOYFUL", "AMAZING", "SPECIAL", "BLESSED"
 ];
 
-const MAX_ATTEMPTS = 6;
+const MAX_ATTEMPTS = 8;
 
 const KEYBOARD_ROWS = [
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
@@ -230,11 +230,39 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onS
         </div>
     );
 
+    // Add this function to get a hint for the current word
+    const getWordHint = () => {
+        switch (targetWord) {
+            case "HAPPY": return "feeling or showing pleasure or contentment";
+            case "SMILE": return "form one's features into a pleased expression";
+            case "LAUGH": return "make the spontaneous sounds of joy";
+            case "DANCE": return "move rhythmically to music";
+            case "SHINE": return "give out a bright light";
+            case "DREAM": return "a series of thoughts or images in sleep";
+            case "HEART": return "the center of emotions";
+            case "SWEET": return "having a pleasant taste like sugar";
+            case "PEACE": return "freedom from disturbance";
+            case "LIGHT": return "natural agent that stimulates sight";
+            case "BIRTHDAY": return "the anniversary of your birth";
+            case "CELEBRATE": return "acknowledge a significant day or event";
+            case "WONDERFUL": return "inspiring delight or admiration";
+            case "FANTASTIC": return "extraordinarily good or attractive";
+            case "JOYFUL": return "feeling, expressing, or causing great pleasure";
+            case "AMAZING": return "causing great surprise or wonder";
+            case "SPECIAL": return "better, greater, or otherwise different";
+            case "BLESSED": return "endowed with divine favor";
+            default: return "";
+        }
+    };
+
     return (
         <div className="wordle-game">
             {renderCompletedWords()}
             <div className="wordle-header">
-                <h2>Wordle Game {currentWordIndex + 1}</h2>
+                <div className="title-container">
+                    <h2>Wordle Game {currentWordIndex + 1}</h2>
+                    <span className="word-hint">{getWordHint()}</span>
+                </div>
                 <button onClick={() => onClose(false)} className="close-button">×</button>
             </div>
             <div className="wordle-grid">

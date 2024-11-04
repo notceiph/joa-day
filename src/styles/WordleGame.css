@@ -357,4 +357,17 @@
     .wordle-game {
         margin-left: 0;
     }
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.word-hint {
+    font-size: 14px;
+    color: #888;
+    font-style: italic;
+    font-weight: normal;
 } 

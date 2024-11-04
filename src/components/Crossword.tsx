@@ -170,7 +170,10 @@ const Crossword: React.FC = () => {
 
     // If clicking the same cell, toggle direction
     if (selectedCell && selectedCell[0] === row && selectedCell[1] === col) {
-      setDirection(prev => prev === 'across' ? 'down' : 'across');
+      const newDirection = direction === 'across' ? 'down' : 'across';
+      setDirection(newDirection);
+      // Update the selected clue when toggling direction
+      updateSelectedClue(row, col, newDirection);
       return;
     }
 
@@ -178,6 +181,7 @@ const Crossword: React.FC = () => {
     const cellValue = puzzle.grid[row][col];
     const hasNumber = cellValue !== '.' && !isNaN(Number(cellValue));
     
+    let newDirection = direction;
     if (hasNumber) {
       // Check if this number starts both across and down clues
       const number = cellValue;
@@ -187,39 +191,45 @@ const Crossword: React.FC = () => {
       if (hasAcross && hasDown) {
         // If both directions are available, prefer the current direction
         // If no current direction (first click), default to across
-        setDirection(prev => prev || 'across');
+        newDirection = direction || 'across';
       } else if (hasAcross) {
-        setDirection('across');
+        newDirection = 'across';
       } else if (hasDown) {
-        setDirection('down');
+        newDirection = 'down';
       }
     }
 
+    setDirection(newDirection);
     setSelectedCell([row, col]);
-  }, [puzzle, selectedCell]);
+    
+    // Find the clue number for the current word and update selected clue
+    updateSelectedClue(row, col, newDirection);
+  }, [puzzle, selectedCell, direction]);
 
-  const updateSelectedClue = (row: number, col: number, currentDirection: ClueType) => {
+  const updateSelectedClue = useCallback((row: number, col: number, currentDirection: ClueType) => {
     if (!puzzle) return;
-    const cellContent = puzzle.grid[row][col];
-    if (cellContent !== '#') {
-      const clueNumber = findClueNumber(row, col, currentDirection);
+    
+    // Find the start of the current word
+    let startRow = row;
+    let startCol = col;
+    
+    if (currentDirection === 'across') {
+      while (startCol > 0 && puzzle.grid[row][startCol - 1] !== '#') {
+        startCol--;
+      }
+    } else {
+      while (startRow > 0 && puzzle.grid[startRow - 1][col] !== '#') {
+        startRow--;
+      }
+    }
+    
+    // Get the clue number from the starting cell
+    const clueNumber = puzzle.grid[startRow][startCol];
+    if (clueNumber !== '#' && clueNumber !== '.') {
       setSelectedClue({ number: clueNumber, type: currentDirection });
       scrollToClue(clueNumber, currentDirection);
     }
-  };
-
-  const findClueNumber = (row: number, col: number, type: ClueType): string => {
-    if (type === 'across') {
-      while (col > 0 && puzzle!.grid[row][col - 1] !== '#') {
-        col--;
-      }
-    } else {
-      while (row > 0 && puzzle!.grid[row - 1][col] !== '#') {
-        row--;
-      }
-    }
-    return puzzle!.grid[row][col];
-  };
+  }, [puzzle]);
 
   const checkAnswers = () => {
     if (!puzzle) return;

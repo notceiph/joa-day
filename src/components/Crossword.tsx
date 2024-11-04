@@ -77,6 +77,7 @@ const Crossword: React.FC = () => {
   } = useContext(CrosswordContext);
 
   const clueListRef = useRef<HTMLDivElement>(null);
+  const modalTimeoutRef = useRef<number | null>(null);
 
   const calculateProgress = () => {
     if (totalCluesCount === 0) return 0; // Prevent division by zero
@@ -376,8 +377,7 @@ const Crossword: React.FC = () => {
 
     const currentCells = getCurrentWordCells();
     if (currentCells.length === 0) {
-      setModalMessage('Please select a word to check');
-      setTimeout(() => setModalMessage(null), 3000);
+      showModal('Please select a word to check');
       return;
     }
 
@@ -404,17 +404,40 @@ const Crossword: React.FC = () => {
     );
 
     if (incorrectPositions.length === 0 && userAnswer.length > 0) {
-      setModalMessage('This word is correct!');
+      showModal('This word is correct!');
     } else if (userAnswer.length === 0) {
-      setModalMessage('Please enter some letters before checking');
+      showModal('Please enter some letters before checking');
     } else {
-      setModalMessage('Some letters are incorrect. Keep trying!');
+      showModal('Some letters are incorrect. Keep trying!');
       setIncorrectCells(incorrectPositions);
       setTimeout(() => setIncorrectCells([]), 2000);
     }
-    
-    setTimeout(() => setModalMessage(null), 3000);
   };
+
+  const showModal = (message: string) => {
+    // Clear any existing timeout
+    if (modalTimeoutRef.current) {
+      clearTimeout(modalTimeoutRef.current);
+    }
+    
+    // Show the new message
+    setModalMessage(message);
+    
+    // Set new timeout and store its ID
+    modalTimeoutRef.current = window.setTimeout(() => {
+      setModalMessage(null);
+      modalTimeoutRef.current = null;
+    }, 3000);
+  };
+
+  // Clean up timeout on component unmount
+  useEffect(() => {
+    return () => {
+      if (modalTimeoutRef.current) {
+        clearTimeout(modalTimeoutRef.current);
+      }
+    };
+  }, []);
 
   if (!puzzle) return <div>Loading...</div>;
 

@@ -468,18 +468,16 @@ const Crossword: React.FC = () => {
   const WelcomeModal = () => (
     <div className="welcome-modal-overlay" onClick={handleCloseWelcomeModal}>
       <div className="welcome-modal" onClick={e => e.stopPropagation()}>
-        <h2>Welcome to our Crossword Puzzle! 🎉</h2>
+        <h2>happy mf birthday to the cutest girl in the world ❤🎉</h2>
         <p>
-          I remember when we first met, we bonded over Wordle and crossword puzzles. 
-          Here's a special collection of puzzles just for you! You can switch between 
-          crossword and Wordle modes using the button above.
+          it's your special day, and it's becoming one of my favorites
+          <img src="/bugcat-capoo.gif" alt="Bugcat Nod" className="gif-icon" />
         </p>
         <p>
-          Feel free to check your answers as you go, and don't forget to try both 
-          Easy and Hard modes!
+          when we met, i had no interest in crossword puzzles or wordles at all LOL but i did really enjoy watching you work through it all, and it slowly became something we bonded over, our little routine... :') so what better way to celebrate your special day, i spent waaaaaaaay too much time doing this but i hope you have fun doing it.
         </p>
         <button onClick={handleCloseWelcomeModal}>
-          Let's Start Solving!
+          start
         </button>
       </div>
     </div>

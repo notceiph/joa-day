@@ -338,3 +338,10 @@
     transform: rotate(-45deg) translateX(100%);
   }
 }
+
+.welcome-modal p img.gif-icon {
+  width: 50px; /* Adjust size as needed */
+  height: auto;
+  margin-left: 10px; /* Space between text and image */
+  vertical-align: middle; /* Align with text */
+}

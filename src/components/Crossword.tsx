@@ -20,6 +20,11 @@ const CrosswordProvider: React.FC<{ children: React.ReactNode }> = ({ children }
   const totalCluesCount = Object.keys(puzzleData.clues.across).length + Object.keys(puzzleData.clues.down).length; // Total clues
   const [incorrectCells, setIncorrectCells] = useState<[number, number][]>([]);
   const [modalMessage, setModalMessage] = useState<string | null>(null);
+  const [showWelcomeModal, setShowWelcomeModal] = useState<boolean>(() => {
+    // Check if the modal has been shown before
+    const hasSeenWelcome = localStorage.getItem('hasSeenWelcome');
+    return !hasSeenWelcome;
+  });
 
   useEffect(() => {
     setPuzzle(puzzleData);
@@ -27,6 +32,12 @@ const CrosswordProvider: React.FC<{ children: React.ReactNode }> = ({ children }
       Array(puzzleData.grid[0].length).fill('')
     ));
   }, []);
+
+  // Save modal state when it's closed
+  const handleCloseWelcomeModal = () => {
+    setShowWelcomeModal(false);
+    localStorage.setItem('hasSeenWelcome', 'true');
+  };
 
   return (
     <CrosswordContext.Provider value={{
@@ -48,6 +59,8 @@ const CrosswordProvider: React.FC<{ children: React.ReactNode }> = ({ children }
       setIncorrectCells,
       modalMessage,
       setModalMessage,
+      showWelcomeModal,
+      setShowWelcomeModal,
     }}>
       {children}
     </CrosswordContext.Provider>
@@ -74,6 +87,8 @@ const Crossword: React.FC = () => {
     setIncorrectCells,
     modalMessage,
     setModalMessage,
+    showWelcomeModal,
+    setShowWelcomeModal,
   } = useContext(CrosswordContext);
 
   const clueListRef = useRef<HTMLDivElement>(null);
@@ -449,11 +464,43 @@ const Crossword: React.FC = () => {
     };
   }, []);
 
+  const handleCloseWelcomeModal = useCallback(() => {
+    setShowWelcomeModal(false);
+    localStorage.setItem('hasSeenWelcome', 'true');
+  }, [setShowWelcomeModal]);
+
+  const WelcomeModal = () => (
+    <div className="welcome-modal-overlay" onClick={handleCloseWelcomeModal}>
+      <div className="welcome-modal" onClick={e => e.stopPropagation()}>
+        <h2>Welcome to our Crossword Puzzle! 🎉</h2>
+        <p>
+          I remember when we first met, we bonded over Wordle and crossword puzzles. 
+          Here's a special collection of puzzles just for you! You can switch between 
+          crossword and Wordle modes using the button above.
+        </p>
+        <p>
+          Feel free to check your answers as you go, and don't forget to try both 
+          Easy and Hard modes!
+        </p>
+        <button onClick={handleCloseWelcomeModal}>
+          Let's Start Solving!
+        </button>
+      </div>
+    </div>
+  );
+
   if (!puzzle) return <div>Loading...</div>;
 
   return (
     <div onKeyDown={handleKeyDown} tabIndex={0} className="crossword">
-      <LoadingBar progress={calculateProgress()} /> {/* Render the loading bar */}
+      {showWelcomeModal && <WelcomeModal />}
+      <button 
+        className="show-welcome-btn"
+        onClick={() => setShowWelcomeModal(true)}
+      >
+        Welcome
+      </button>
+      <LoadingBar progress={calculateProgress()} />
       {modalMessage && (
         <div className="feedback-modal">
           <p>{modalMessage}</p>

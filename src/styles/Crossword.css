@@ -247,33 +247,52 @@
 }
 
 .show-welcome-btn {
-  background: linear-gradient(to bottom, #c8aa6e 0%, #a47d45 100%);
-  border: none;
-  padding: 0.6rem 1.2rem;
-  font-family: 'Beaufort for LOL', serif;
-  font-weight: 600;
-  color: #1e2328;
-  text-transform: uppercase;
-  letter-spacing: 1px;
   position: fixed;
   top: 20px;
   left: 20px;
   z-index: 100;
   cursor: pointer;
-  border-radius: 2px;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #c8aa6e 0%, #a47d45 100%);
+  border: none;
   box-shadow: 
-    0 0 10px rgba(200, 170, 110, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.2),
     inset 0 0 2px rgba(255, 255, 255, 0.5);
   transition: all 0.3s ease;
-  font-size: 0.9rem;
 }
 
 .show-welcome-btn:hover {
-  background: linear-gradient(to bottom, #d5b77a 0%, #b28b4f 100%);
-  transform: translateY(-2px);
+  transform: scale(1.1) rotate(5deg);
   box-shadow: 
-    0 0 20px rgba(200, 170, 110, 0.4),
-    inset 0 0 2px rgba(255, 255, 255, 0.6);
+    0 6px 16px rgba(0, 0, 0, 0.3),
+    inset 0 0 4px rgba(255, 255, 255, 0.6);
+}
+
+.show-welcome-btn:active {
+  transform: scale(0.95);
+}
+
+.gift-icon {
+  width: 24px;
+  height: 24px;
+  color: #1e2328;
+}
+
+@media (max-width: 768px) {
+  .show-welcome-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .gift-icon {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 @keyframes modalReveal {

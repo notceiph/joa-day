@@ -20,11 +20,7 @@ const CrosswordProvider: React.FC<{ children: React.ReactNode }> = ({ children }
   const totalCluesCount = Object.keys(puzzleData.clues.across).length + Object.keys(puzzleData.clues.down).length; // Total clues
   const [incorrectCells, setIncorrectCells] = useState<[number, number][]>([]);
   const [modalMessage, setModalMessage] = useState<string | null>(null);
-  const [showWelcomeModal, setShowWelcomeModal] = useState<boolean>(() => {
-    // Check if the modal has been shown before
-    const hasSeenWelcome = localStorage.getItem('hasSeenWelcome');
-    return !hasSeenWelcome;
-  });
+  const [showWelcomeModal, setShowWelcomeModal] = useState<boolean>(true);
 
   useEffect(() => {
     setPuzzle(puzzleData);
@@ -497,8 +493,16 @@ const Crossword: React.FC = () => {
       <button 
         className="show-welcome-btn"
         onClick={() => setShowWelcomeModal(true)}
+        aria-label="Open Welcome Message"
       >
-        Welcome
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 24 24" 
+          fill="currentColor" 
+          className="gift-icon"
+        >
+          <path d="M9.375 3a1.875 1.875 0 0 0-1.875 1.875c0 1.036.84 1.875 1.875 1.875h.375a3.75 3.75 0 0 1 2.625 1.052l.076.073a.75.75 0 0 0 1.053-.005l.066-.064A3.75 3.75 0 0 1 14.625 6.75h.375a1.875 1.875 0 0 0 0-3.75h-.375a1.875 1.875 0 0 0-1.875 1.875v.375a.375.375 0 0 1-.375.375h-.75a.375.375 0 0 1-.375-.375v-.375A1.875 1.875 0 0 0 9.375 3Zm-.375 5.25a.75.75 0 0 0-.75.75v10.5c0 .414.336.75.75.75h12a.75.75 0 0 0 .75-.75V9a.75.75 0 0 0-.75-.75H9Zm6.75-4.5v3.75a.375.375 0 0 1-.375.375h-.75a.375.375 0 0 1-.375-.375V3.75a1.875 1.875 0 0 0-1.875-1.875h5.25a1.875 1.875 0 0 1 0 3.75h-.375a1.875 1.875 0 0 1-1.5-.75Z" />
+        </svg>
       </button>
       <LoadingBar progress={calculateProgress()} />
       {modalMessage && (

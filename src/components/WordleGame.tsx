@@ -9,10 +9,8 @@ interface WordleGameProps {
 }
 
 const WORDS = [
-    "ELI", "PAUL", "SLEEP", "TEXAS", "VOICE",
-    "YAPPER", "BURRITO", "SWEET", "PEACE", "LIGHT",
-    "BIRTHDAY", "CELEBRATE", "WONDERFUL", "FANTASTIC",
-    "JOYFUL", "AMAZING", "SPECIAL", "BLESSED"
+    "ELI", "PAUL", "SLEEP", "HEART", "VOICE",
+    "YAPPER", "BURRITO", "ACCENT", "FEET", "EVERYTHING", "LAUGH"
 ];
 
 const MAX_ATTEMPTS = 8;
@@ -234,24 +232,17 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onS
     // Add this function to get a hint for the current word
     const getWordHint = () => {
         switch (targetWord) {
-            case "HAPPY": return "feeling or showing pleasure or contentment";
-            case "SMILE": return "form one's features into a pleased expression";
-            case "LAUGH": return "make the spontaneous sounds of joy";
-            case "DANCE": return "move rhythmically to music";
-            case "SHINE": return "give out a bright light";
-            case "DREAM": return "a series of thoughts or images in sleep";
-            case "HEART": return "the center of emotions";
-            case "SWEET": return "having a pleasant taste like sugar";
-            case "PEACE": return "freedom from disturbance";
-            case "LIGHT": return "natural agent that stimulates sight";
-            case "BIRTHDAY": return "the anniversary of your birth";
-            case "CELEBRATE": return "acknowledge a significant day or event";
-            case "WONDERFUL": return "inspiring delight or admiration";
-            case "FANTASTIC": return "extraordinarily good or attractive";
-            case "JOYFUL": return "feeling, expressing, or causing great pleasure";
-            case "AMAZING": return "causing great surprise or wonder";
-            case "SPECIAL": return "better, greater, or otherwise different";
-            case "BLESSED": return "endowed with divine favor";
+            case "ELI": return "Your favorite person in the world. Your protector.";
+            case "PAUL": return "A human in fur coat.";
+            case "SLEEP": return "You get none of this.";
+            case "HEART": return "You belong in my _____";
+            case "VOICE": return "My favorite thing about you.";
+            case "YAPPER": return "I could talk to you all day.";
+            case "BURRITO": return "You hate me but you love me at the same time.";
+            case "ACCENT": return "When this randomly comes out, its so cute.";
+            case "FEET": return "Your favorite part of my body............freak";
+            case "EVERYTHING": return "You are my __________";
+            case "LAUGH": return "Music to my ears, your _____";
             default: return "";
         }
     };

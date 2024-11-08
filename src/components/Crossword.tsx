@@ -470,11 +470,14 @@ const Crossword: React.FC = () => {
       <div className="welcome-modal" onClick={e => e.stopPropagation()}>
         <h2>happy mf birthday to the cutest girl in the world ❤🎉</h2>
         <p>
-          it's your special day, and it's becoming one of my favorites
+          it's your special day, and it's now one of my favorites
           <img src="/bugcat-capoo.gif" alt="Bugcat Nod" className="gif-icon" />
         </p>
         <p>
-          when we met, i had no interest in crossword puzzles or wordles at all LOL but i did really enjoy watching you work through it all, and it slowly became something we bonded over, our little routine... :') so what better way to celebrate your special day, i spent waaaaaaaay too much time doing this but i hope you have fun doing it.
+          when we met, i had no interest in crossword puzzles or wordles at all LOL but i did really enjoy watching you work through it all, and it slowly became something we bonded over, our little routine... :')
+        </p>
+        <p>
+          so what better way to celebrate your special day, i spent waaaaaaaay too much time doing this but i hope you have fun playing
         </p>
         <button onClick={handleCloseWelcomeModal}>
           start

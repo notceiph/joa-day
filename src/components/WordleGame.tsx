@@ -98,16 +98,23 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onS
             Array(MAX_ATTEMPTS).fill([]).map(() => Array(selectedWord.length).fill(false))
         );
         
-        setAvailableWords(prev => prev.filter((_, i) => i !== randomIndex));
+        const newAvailableWords = [...availableWords];
+        newAvailableWords.splice(randomIndex, 1);
+        setAvailableWords(newAvailableWords);
     };
 
     const moveToNextWord = () => {
-        // Store only the correct guess for the completed word
-        const wordHistory: WordHistory = {
-            word: targetWord,
-            guesses: [currentGuess] // Only store the successful guess
-        };
-        setCompletedWords(prev => [...prev, wordHistory]);
+        // Check if the word is already in completedWords before adding it
+        const isWordAlreadyCompleted = completedWords.some(history => history.word === targetWord);
+        
+        if (!isWordAlreadyCompleted) {
+            // Store only the correct guess for the completed word
+            const wordHistory: WordHistory = {
+                word: targetWord,
+                guesses: [currentGuess] // Only store the successful guess
+            };
+            setCompletedWords(prev => [...prev, wordHistory]);
+        }
 
         // Reset game state for next word
         setCurrentWordIndex(prev => prev + 1);
@@ -237,7 +244,7 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onS
             case "SLEEP": return "You get none of this.";
             case "HEART": return "You belong in my _____";
             case "VOICE": return "My favorite thing about you.";
-            case "YAPPER": return "I could talk to you all day.";
+            case "YAPPER": return "I could talk to you all day. You're my _____";
             case "BURRITO": return "You hate me but you love me at the same time.";
             case "ACCENT": return "When this randomly comes out, its so cute.";
             case "FEET": return "Your favorite part of my body............freak";

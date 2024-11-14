@@ -255,3 +255,52 @@ h1 {
 .completion-modal .close-modal-btn {
   display: none;
 }
+
+.dev-tools-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(200, 170, 110, 0.3);
+}
+
+.dev-tools-section {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(200, 170, 110, 0.05);
+  border-radius: 8px;
+}
+
+.dev-tools-section h4 {
+  margin: 0 0 10px 0;
+  color: #c8aa6e;
+  font-size: 1.1em;
+}
+
+.dev-tools-info {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.dev-tools-info p {
+  margin: 5px 0;
+  font-size: 0.9em;
+  color: #c8aa6e;
+}
+
+.dev-tool-btn.warning {
+  border-color: #ff4444;
+  color: #ff4444;
+}
+
+.dev-tool-btn.warning:hover {
+  background: rgba(255, 68, 68, 0.1);
+}
+
+.dev-tools-modal {
+  max-height: 80vh;
+  overflow-y: auto;
+}

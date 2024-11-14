@@ -11,6 +11,7 @@ const App: React.FC = () => {
   const [showCompletionToast, setShowCompletionToast] = useState(false);
   const [showDevTools, setShowDevTools] = useState(false);
   const [keySequence, setKeySequence] = useState('');
+  const [showAnswers, setShowAnswers] = useState(false);
 
   // Check if both games are completed
   useEffect(() => {
@@ -63,6 +64,22 @@ const App: React.FC = () => {
     setShowDevTools(false);
   };
 
+  const handleToggleAnswers = () => {
+    setShowAnswers(!showAnswers);
+  };
+
+  const handleResetGames = () => {
+    setIsWordleCompleted(false);
+    setIsCrosswordCompleted(false);
+    setWordleState(null);
+    setShowCompletionToast(false);
+    setShowDevTools(false);
+  };
+
+  const handleToggleToast = () => {
+    setShowCompletionToast(!showCompletionToast);
+  };
+
   return (
     <div className="App">
       <h1>happy birthday joa :)</h1>
@@ -74,33 +91,80 @@ const App: React.FC = () => {
         Switch to {currentGame === 'crossword' ? 'Wordle' : 'Crossword'}
       </button>
       
-      {/* Dev Tools Modal */}
+      {/* Updated Dev Tools Modal */}
       {showDevTools && (
         <div className="dev-tools-overlay">
           <div className="dev-tools-modal">
-            <h3>Dev Tools</h3>
-            <div className="dev-tools-content">
+            <div className="dev-tools-header">
+              <h3>Dev Tools</h3>
               <button 
-                onClick={handleCompleteWordle}
-                className="dev-tool-btn"
-                disabled={isWordleCompleted}
+                onClick={() => setShowDevTools(false)}
+                className="modal-close-btn"
+                aria-label="Close dev tools"
               >
-                Complete Wordle {isWordleCompleted ? '(Done)' : ''}
-              </button>
-              <button 
-                onClick={handleCompleteCrossword}
-                className="dev-tool-btn"
-                disabled={isCrosswordCompleted}
-              >
-                Complete Crossword {isCrosswordCompleted ? '(Done)' : ''}
+                ×
               </button>
             </div>
-            <button 
-              onClick={() => setShowDevTools(false)}
-              className="close-modal-btn"
-            >
-              Close
-            </button>
+            <div className="dev-tools-content">
+              <div className="dev-tools-section">
+                <h4>Game Completion</h4>
+                <button 
+                  onClick={handleCompleteWordle}
+                  className="dev-tool-btn"
+                  disabled={isWordleCompleted}
+                >
+                  Complete Wordle {isWordleCompleted ? '(Done)' : ''}
+                </button>
+                <button 
+                  onClick={handleCompleteCrossword}
+                  className="dev-tool-btn"
+                  disabled={isCrosswordCompleted}
+                >
+                  Complete Crossword {isCrosswordCompleted ? '(Done)' : ''}
+                </button>
+              </div>
+
+              <div className="dev-tools-section">
+                <h4>Game Controls</h4>
+                <button 
+                  onClick={handleResetGames}
+                  className="dev-tool-btn warning"
+                >
+                  Reset All Games
+                </button>
+                <button 
+                  onClick={handleToggleAnswers}
+                  className="dev-tool-btn"
+                >
+                  {showAnswers ? 'Hide Answers' : 'Show Answers'}
+                </button>
+                <button 
+                  onClick={() => setCurrentGame(currentGame === 'crossword' ? 'wordle' : 'crossword')}
+                  className="dev-tool-btn"
+                >
+                  Switch Game
+                </button>
+              </div>
+
+              <div className="dev-tools-section">
+                <h4>UI Controls</h4>
+                <button 
+                  onClick={handleToggleToast}
+                  className="dev-tool-btn"
+                >
+                  Toggle Completion Modal
+                </button>
+              </div>
+
+              <div className="dev-tools-section">
+                <h4>Game State</h4>
+                <div className="dev-tools-info">
+                  <p>Wordle: {isWordleCompleted ? '✅' : '❌'}</p>
+                  <p>Crossword: {isCrosswordCompleted ? '✅' : '❌'}</p>
+                  <p>Current Game: {currentGame}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}

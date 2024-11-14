@@ -67,6 +67,26 @@ interface CrosswordProps {
   onComplete: (completed: boolean) => void;
 }
 
+const findClueNumber = (grid: string[][], row: number, col: number, direction: 'across' | 'down'): string => {
+  // First, backtrack to find the start of the word
+  let startRow = row;
+  let startCol = col;
+  
+  if (direction === 'across') {
+    while (startCol > 0 && grid[row][startCol - 1] !== '#') {
+      startCol--;
+    }
+  } else {
+    while (startRow > 0 && grid[startRow - 1][col] !== '#') {
+      startRow--;
+    }
+  }
+  
+  // The cell value at the start position should be the clue number
+  const cellValue = grid[startRow][startCol];
+  return cellValue !== '.' && cellValue !== '#' ? cellValue : '';
+};
+
 const Crossword: React.FC<CrosswordProps> = ({ onComplete }) => {
   const {
     puzzle,
@@ -250,33 +270,63 @@ const Crossword: React.FC<CrosswordProps> = ({ onComplete }) => {
     if (!puzzle) return;
 
     let hasInput = false;
-    let incorrectCount = 0;
+    let correctCount = 0;
 
-    // Check each answer
-    for (let row = 0; row < puzzle.grid.length; row++) {
-      for (let col = 0; col < puzzle.grid[0].length; col++) {
-        if (puzzle.grid[row][col] !== null) {
-          if (userAnswers[row][col] !== '') {
-            hasInput = true;
-          }
-          if (userAnswers[row][col].toUpperCase() !== puzzle.grid[row][col]) {
-            incorrectCount++;
-          }
-        }
+    // Check across clues
+    Object.entries(puzzle.clues.across).forEach(([number, clue]) => {
+      // Find the starting cell for this clue
+      let startCell = findStartingCell(number, 'across');
+      if (startCell[0] === -1) return; // Skip if start cell not found
+      
+      const [row, startCol] = startCell;
+      let userAnswer = '';
+      let col = startCol;
+      
+      // Collect user answer until we hit a black cell or grid edge
+      while (col < puzzle.grid[row].length && puzzle.grid[row][col] !== '#') {
+        userAnswer += userAnswers[row][col];
+        col++;
       }
-    }
+
+      if (userAnswer !== '') hasInput = true;
+      if (userAnswer.toUpperCase() === clue.answer.toUpperCase()) {
+        correctCount++;
+      }
+    });
+
+    // Check down clues
+    Object.entries(puzzle.clues.down).forEach(([number, clue]) => {
+      // Find the starting cell for this clue
+      let startCell = findStartingCell(number, 'down');
+      if (startCell[0] === -1) return; // Skip if start cell not found
+      
+      const [startRow, col] = startCell;
+      let userAnswer = '';
+      let row = startRow;
+      
+      // Collect user answer until we hit a black cell or grid edge
+      while (row < puzzle.grid.length && puzzle.grid[row][col] !== '#') {
+        userAnswer += userAnswers[row][col];
+        row++;
+      }
+
+      if (userAnswer !== '') hasInput = true;
+      if (userAnswer.toUpperCase() === clue.answer.toUpperCase()) {
+        correctCount++;
+      }
+    });
 
     // Update the correct answers count state
-    const correctCount = totalCluesCount - incorrectCount;
     setCorrectAnswersCount(correctCount);
 
-    // Show modal message instead of alert
+    // Show modal message
     if (!hasInput) {
       setModalMessage('Please enter some answers before checking!');
-    } else if (incorrectCount === 0) {
+    } else if (correctCount === totalCluesCount) {
       setModalMessage('Congratulations! All answers are correct!');
       onComplete(true);
     } else {
+      const incorrectCount = totalCluesCount - correctCount;
       setModalMessage(`Some answers are incorrect. You have ${incorrectCount} incorrect answer(s). Keep trying!`);
     }
 
@@ -391,7 +441,7 @@ const Crossword: React.FC<CrosswordProps> = ({ onComplete }) => {
 
     // Find the clue number for the current word
     const [startRow, startCol] = currentCells[0];
-    const clueNumber = findClueNumber(startRow, startCol, direction);
+    const clueNumber = findClueNumber(puzzle.grid, startRow, startCol, direction);
     const clue = puzzle.clues[direction][clueNumber];
 
     if (!clue) return;
@@ -531,10 +581,19 @@ const Crossword: React.FC<CrosswordProps> = ({ onComplete }) => {
 };
 
 // Wrap the Crossword component with the provider
-const App: React.FC = () => (
-  <CrosswordProvider>
-    <Crossword />
-  </CrosswordProvider>
-);
+const App: React.FC = () => {
+  const handleComplete = (completed: boolean) => {
+    if (completed) {
+      console.log('Puzzle completed!');
+      // Add any additional completion handling here
+    }
+  };
+
+  return (
+    <CrosswordProvider>
+      <Crossword onComplete={handleComplete} />
+    </CrosswordProvider>
+  );
+};
 
 export default App;

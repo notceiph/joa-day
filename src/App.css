@@ -28,3 +28,230 @@ h1 {
 .game-switch-btn:hover {
   background-color: #f0f0f0;
 }
+
+.completion-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #1e2328 0%, #2a2f35 100%);
+  color: #c8aa6e;
+  padding: 20px 40px;
+  border-radius: 8px;
+  font-size: 24px;
+  font-weight: bold;
+  border: 1px solid #c8aa6e;
+  box-shadow: 
+    0 0 20px rgba(200, 170, 110, 0.2),
+    0 0 40px rgba(200, 170, 110, 0.1);
+  animation: toastFadeIn 0.5s ease-out;
+  z-index: 1000;
+}
+
+@keyframes toastFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.completion-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.completion-modal {
+  background: linear-gradient(135deg, #1e2328 0%, #2a2f35 100%);
+  color: #c8aa6e;
+  padding: 40px;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  border: 2px solid #c8aa6e;
+  box-shadow: 
+    0 0 20px rgba(200, 170, 110, 0.2),
+    0 0 40px rgba(200, 170, 110, 0.1);
+  animation: modalSlideIn 0.5s ease-out;
+}
+
+.completion-modal h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #c8aa6e;
+}
+
+.completion-content {
+  margin: 20px 0;
+}
+
+.completion-content p {
+  margin: 15px 0;
+  font-size: 1.2em;
+  line-height: 1.5;
+}
+
+.completion-hearts {
+  font-size: 2em;
+  margin: 20px 0;
+  animation: heartbeat 1.5s infinite;
+}
+
+.spotify-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: #1DB954;
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.spotify-link:hover {
+  background: #1ed760;
+  transform: scale(1.05);
+}
+
+.close-modal-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid #c8aa6e;
+  color: #c8aa6e;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-modal-btn:hover {
+  background: rgba(200, 170, 110, 0.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.dev-tools-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.dev-tools-modal {
+  background: #1e1e1e;
+  border: 2px solid #c8aa6e;
+  border-radius: 8px;
+  padding: 20px;
+  min-width: 300px;
+  color: #c8aa6e;
+}
+
+.dev-tools-modal h3 {
+  margin: 0 0 20px 0;
+  font-size: 1.5em;
+}
+
+.dev-tools-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.dev-tool-btn {
+  padding: 10px;
+  background: transparent;
+  border: 1px solid #c8aa6e;
+  color: #c8aa6e;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dev-tool-btn:hover:not(:disabled) {
+  background: rgba(200, 170, 110, 0.1);
+}
+
+.dev-tool-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #666;
+  color: #666;
+}
+
+.completion-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.completion-modal-header h2 {
+  margin: 0;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: #c8aa6e;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  line-height: 1;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.modal-close-btn:hover {
+  background: rgba(200, 170, 110, 0.1);
+}
+
+.completion-modal .close-modal-btn {
+  display: none;
+}

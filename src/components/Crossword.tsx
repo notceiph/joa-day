@@ -63,7 +63,11 @@ const CrosswordProvider: React.FC<{ children: React.ReactNode }> = ({ children }
   );
 };
 
-const Crossword: React.FC = () => {
+interface CrosswordProps {
+  onComplete: (completed: boolean) => void;
+}
+
+const Crossword: React.FC<CrosswordProps> = ({ onComplete }) => {
   const {
     puzzle,
     userAnswers,
@@ -245,43 +249,25 @@ const Crossword: React.FC = () => {
   const checkAnswers = () => {
     if (!puzzle) return;
 
-    let incorrectCount = 0; // Initialize a counter for incorrect answers
-    let hasInput = false; // Track if there is any user input
-    let correctCount = 0; // Track correct answers
+    let hasInput = false;
+    let incorrectCount = 0;
 
-    // Check across clues
-    for (const clueNumber in puzzle.clues.across) {
-      const clue = puzzle.clues.across[clueNumber];
-      const [startRow, startCol] = findStartingCell(clueNumber, 'across');
-      if (startRow !== -1 && startCol !== -1) {
-        const userAnswer = userAnswers[startRow].slice(startCol, startCol + clue.answer.length).join('');
-        if (userAnswer.toUpperCase() !== clue.answer.toUpperCase()) {
-          incorrectCount++;
-          console.log(`Incorrect answer for clue ${clueNumber}: expected "${clue.answer}", got "${userAnswer}"`);
-        } else {
-          correctCount++; // Increment correct count
-          hasInput = true; // Mark that there is at least one input
-        }
-      }
-    }
-
-    // Check down clues
-    for (const clueNumber in puzzle.clues.down) {
-      const clue = puzzle.clues.down[clueNumber];
-      const [startRow, startCol] = findStartingCell(clueNumber, 'down');
-      if (startRow !== -1 && startCol !== -1) {
-        const userAnswer = userAnswers.slice(startRow, startRow + clue.answer.length).map(row => row[startCol]).join('');
-        if (userAnswer.toUpperCase() !== clue.answer.toUpperCase()) {
-          incorrectCount++;
-          console.log(`Incorrect answer for clue ${clueNumber}: expected "${clue.answer}", got "${userAnswer}"`);
-        } else {
-          correctCount++; // Increment correct count
-          hasInput = true; // Mark that there is at least one input
+    // Check each answer
+    for (let row = 0; row < puzzle.grid.length; row++) {
+      for (let col = 0; col < puzzle.grid[0].length; col++) {
+        if (puzzle.grid[row][col] !== null) {
+          if (userAnswers[row][col] !== '') {
+            hasInput = true;
+          }
+          if (userAnswers[row][col].toUpperCase() !== puzzle.grid[row][col]) {
+            incorrectCount++;
+          }
         }
       }
     }
 
     // Update the correct answers count state
+    const correctCount = totalCluesCount - incorrectCount;
     setCorrectAnswersCount(correctCount);
 
     // Show modal message instead of alert
@@ -289,6 +275,7 @@ const Crossword: React.FC = () => {
       setModalMessage('Please enter some answers before checking!');
     } else if (incorrectCount === 0) {
       setModalMessage('Congratulations! All answers are correct!');
+      onComplete(true);
     } else {
       setModalMessage(`Some answers are incorrect. You have ${incorrectCount} incorrect answer(s). Keep trying!`);
     }

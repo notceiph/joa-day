@@ -84,6 +84,7 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onS
 
     const selectNewWord = () => {
         if (availableWords.length === 0) {
+            setGameStatus('won');
             onClose(true);
             return;
         }

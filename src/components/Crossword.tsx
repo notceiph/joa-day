@@ -268,70 +268,79 @@ const Crossword: React.FC<CrosswordProps> = ({ onComplete }) => {
 
   const checkAnswers = () => {
     if (!puzzle) return;
-
-    let hasInput = false;
-    let correctCount = 0;
-
+    
+    let allCorrect = true;
+    const newIncorrectCells: [number, number][] = [];
+    let totalCorrectAnswers = 0;
+    
     // Check across clues
     Object.entries(puzzle.clues.across).forEach(([number, clue]) => {
-      // Find the starting cell for this clue
       let startCell = findStartingCell(number, 'across');
-      if (startCell[0] === -1) return; // Skip if start cell not found
+      if (startCell[0] === -1) return;
       
       const [row, startCol] = startCell;
       let userAnswer = '';
       let col = startCol;
       
-      // Collect user answer until we hit a black cell or grid edge
       while (col < puzzle.grid[row].length && puzzle.grid[row][col] !== '#') {
-        userAnswer += userAnswers[row][col];
+        const cellValue = userAnswers[row][col];
+        if (!cellValue) {
+          allCorrect = false; // Empty cell found
+          return;
+        }
+        userAnswer += cellValue;
         col++;
       }
 
-      if (userAnswer !== '') hasInput = true;
       if (userAnswer.toUpperCase() === clue.answer.toUpperCase()) {
-        correctCount++;
+        totalCorrectAnswers++;
+      } else {
+        allCorrect = false;
+        newIncorrectCells.push([row, startCol]);
       }
     });
 
     // Check down clues
     Object.entries(puzzle.clues.down).forEach(([number, clue]) => {
-      // Find the starting cell for this clue
+      if (!allCorrect) return; // Skip if already found incorrect answers
+      
       let startCell = findStartingCell(number, 'down');
-      if (startCell[0] === -1) return; // Skip if start cell not found
+      if (startCell[0] === -1) return;
       
       const [startRow, col] = startCell;
       let userAnswer = '';
       let row = startRow;
       
-      // Collect user answer until we hit a black cell or grid edge
       while (row < puzzle.grid.length && puzzle.grid[row][col] !== '#') {
-        userAnswer += userAnswers[row][col];
+        const cellValue = userAnswers[row][col];
+        if (!cellValue) {
+          allCorrect = false; // Empty cell found
+          return;
+        }
+        userAnswer += cellValue;
         row++;
       }
 
-      if (userAnswer !== '') hasInput = true;
       if (userAnswer.toUpperCase() === clue.answer.toUpperCase()) {
-        correctCount++;
+        totalCorrectAnswers++;
+      } else {
+        allCorrect = false;
+        newIncorrectCells.push([startRow, col]);
       }
     });
 
-    // Update the correct answers count state
-    setCorrectAnswersCount(correctCount);
+    setCorrectAnswersCount(totalCorrectAnswers);
 
-    // Show modal message
-    if (!hasInput) {
-      setModalMessage('Please enter some answers before checking!');
-    } else if (correctCount === totalCluesCount) {
-      setModalMessage('Congratulations! All answers are correct!');
-      onComplete(true);
+    if (allCorrect) {
+      showModal("my girlfriend is actually so insane she's literally the best");
+      setTimeout(() => {
+        onComplete(true);
+      }, 3000); // Give time for the modal to be seen
     } else {
-      const incorrectCount = totalCluesCount - correctCount;
-      setModalMessage(`Some answers are incorrect. You have ${incorrectCount} incorrect answer(s). Keep trying!`);
+      showModal('Some answers are incorrect. Keep trying!');
+      setIncorrectCells(newIncorrectCells);
+      setTimeout(() => setIncorrectCells([]), 2000);
     }
-
-    // Auto-hide the modal after 3 seconds
-    setTimeout(() => setModalMessage(null), 3000);
   };
 
   const handleClueClick = useCallback((number: string, type: ClueType) => {

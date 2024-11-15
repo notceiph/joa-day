@@ -445,4 +445,39 @@
     .progress-blocks {
         gap: 3px;
     }
+}
+
+.success-toast-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.success-toast {
+    background-color: #538d4e;
+    color: white;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 24px;
+    animation: toastPop 0.3s ease-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes toastPop {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 } 

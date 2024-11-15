@@ -55,6 +55,7 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onS
     const [completedWords, setCompletedWords] = useState<WordHistory[]>(savedState?.completedWords || []);
     const [currentWordIndex, setCurrentWordIndex] = useState<number>(savedState?.currentWordIndex || 0);
     const [availableWords, setAvailableWords] = useState<string[]>(savedState?.availableWords || [...WORDS]);
+    const [showSuccessToast, setShowSuccessToast] = useState(false);
 
     // Add effect to save state when it changes
     useEffect(() => {
@@ -85,7 +86,11 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onS
     const selectNewWord = () => {
         if (availableWords.length === 0) {
             setGameStatus('won');
-            onClose(true);
+            setShowSuccessToast(true);
+            setTimeout(() => {
+                setShowSuccessToast(false);
+                onClose(true);
+            }, 5000);
             return;
         }
 
@@ -109,10 +114,9 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onS
         const isWordAlreadyCompleted = completedWords.some(history => history.word === targetWord);
         
         if (!isWordAlreadyCompleted) {
-            // Store only the correct guess for the completed word
             const wordHistory: WordHistory = {
                 word: targetWord,
-                guesses: [currentGuess] // Only store the successful guess
+                guesses: [currentGuess]
             };
             setCompletedWords(prev => [...prev, wordHistory]);
         }
@@ -174,13 +178,19 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onS
 
             if (currentGuess === targetWord) {
                 if (availableWords.length > 0) {
-                    // If there are more words, move to next word after a delay
-                    setTimeout(() => moveToNextWord(), 1500);
+                    moveToNextWord();
                 } else {
+                    // All words completed - now show the toast
                     setGameStatus('won');
+                    setShowSuccessToast(true);
+                    setTimeout(() => {
+                        setShowSuccessToast(false);
+                        onClose(true);
+                    }, 5000);
                 }
             } else if (currentAttempt === MAX_ATTEMPTS - 1) {
                 setGameStatus('lost');
+                onClose(false);
             } else {
                 setCurrentAttempt(prev => prev + 1);
                 setCurrentGuess('');
@@ -270,6 +280,16 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onS
         </div>
     );
 
+    // Add this effect to handle completion
+    useEffect(() => {
+        if (gameStatus === 'won') {
+            setShowSuccessToast(true);
+            setTimeout(() => {
+                setShowSuccessToast(false);
+            }, 5000);
+        }
+    }, [gameStatus]);
+
     return (
         <div className="wordle-game">
             {renderCompletedWords()}
@@ -307,6 +327,13 @@ const WordleGame: React.FC<WordleGameProps> = ({ index, onClose, savedState, onS
                 <div className="game-over">
                     <p>{gameStatus === 'won' ? 'Congratulations!' : `The word was: ${targetWord}`}</p>
                     <button onClick={() => onClose(gameStatus === 'won')}>Close</button>
+                </div>
+            )}
+            {showSuccessToast && (
+                <div className="success-toast-container">
+                    <div className="success-toast">
+                        holy fweak you're cwacked!
+                    </div>
                 </div>
             )}
         </div>

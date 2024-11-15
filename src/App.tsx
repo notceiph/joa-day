@@ -213,7 +213,7 @@ const App: React.FC = () => {
                 rel="noopener noreferrer"
                 className="spotify-link"
               >
-                Click here for your birthday playlist! 🎵
+                click here after you listen 🤍
               </a>
             </div>
           </div>

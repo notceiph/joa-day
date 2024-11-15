@@ -194,11 +194,10 @@ const App: React.FC = () => {
               </button>
             </div>
             <div className="completion-content">
-              <p>Congratulations on completing both games!</p>
-              <p>You're amazing, and I hope you enjoyed this little gift.</p>
-              <p>I love you so much, and I hope you have the best birthday ever!</p>
+              <p>this is only part 1 pal...</p>
+              <p>do not let anyone hear this audio, this is for your ears only</p>
               <div className="completion-hearts">
-                ❤️ 💖 💝 💕 💗
+                😩🤪🥳🤓😈💯
               </div>
               <a 
                 href="https://open.spotify.com/playlist/your_playlist_id" 

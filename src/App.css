@@ -105,6 +105,16 @@ h1 {
   line-height: 1.5;
 }
 
+.completion-gif {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  margin: 20px auto;
+  border-radius: 8px;
+  display: block;
+  object-fit: contain;
+}
+
 .completion-hearts {
   font-size: 2em;
   margin: 20px 0;
@@ -222,13 +232,22 @@ h1 {
 
 .completion-modal-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .completion-modal-header h2 {
   margin: 0;
+  text-align: center;
+}
+
+.completion-modal-header .modal-close-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .modal-close-btn {

@@ -184,7 +184,7 @@ const App: React.FC = () => {
         <div className="completion-modal-overlay">
           <div className="completion-modal">
             <div className="completion-modal-header">
-              <h2>YOU DID IT! 🎉</h2>
+              <h2>LETS GOOOO YOU FINISHED IT 🎁</h2>
               <button 
                 onClick={() => setShowCompletionToast(false)}
                 className="modal-close-btn"
@@ -196,6 +196,12 @@ const App: React.FC = () => {
             <div className="completion-content">
               <p>this is only part 1 pal...</p>
               <p>do not let anyone hear this audio, this is for your ears only</p>
+              <img 
+                src="/shh.gif" 
+                alt="shhh GIF" 
+                className="completion-gif"
+              />
+              <br></br>
               <audio 
                 controls
                 className="completion-audio"

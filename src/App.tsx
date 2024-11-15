@@ -196,6 +196,14 @@ const App: React.FC = () => {
             <div className="completion-content">
               <p>this is only part 1 pal...</p>
               <p>do not let anyone hear this audio, this is for your ears only</p>
+              <audio 
+                controls
+                className="completion-audio"
+                aria-label="Completion celebration audio"
+              >
+                <source src="/path/to/your/audio.mp3" type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
               <div className="completion-hearts">
                 😩🤪🥳🤓😈💯
               </div>

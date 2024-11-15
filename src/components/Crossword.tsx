@@ -473,9 +473,9 @@ const Crossword: React.FC<CrosswordProps> = ({ onComplete }) => {
     if (incorrectPositions.length === 0 && userAnswer.length > 0) {
       showModal('literally the best word person ive ever met in my life');
     } else if (userAnswer.length === 0) {
-      showModal('Please enter some letters before checking');
+      showModal('you gotta put letters first LOL');
     } else {
-      showModal('Some letters are incorrect. Keep trying!');
+      showModal('noooooope, you got this tho 😊');
       setIncorrectCells(incorrectPositions);
       setTimeout(() => setIncorrectCells([]), 2000);
     }

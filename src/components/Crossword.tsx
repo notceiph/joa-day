@@ -337,7 +337,7 @@ const Crossword: React.FC<CrosswordProps> = ({ onComplete }) => {
         onComplete(true);
       }, 3000); // Give time for the modal to be seen
     } else {
-      showModal('Some answers are incorrect. Keep trying!');
+      showModal('uh uh uh cutie, ur not done yet LOL');
       setIncorrectCells(newIncorrectCells);
       setTimeout(() => setIncorrectCells([]), 2000);
     }
@@ -471,7 +471,7 @@ const Crossword: React.FC<CrosswordProps> = ({ onComplete }) => {
     );
 
     if (incorrectPositions.length === 0 && userAnswer.length > 0) {
-      showModal('This word is correct!');
+      showModal('literally the best word person ive ever met in my life');
     } else if (userAnswer.length === 0) {
       showModal('Please enter some letters before checking');
     } else {

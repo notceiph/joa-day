@@ -201,7 +201,7 @@ const App: React.FC = () => {
                 className="completion-audio"
                 aria-label="Completion celebration audio"
               >
-                <source src="/path/to/your/audio.mp3" type="audio/mpeg" />
+                <source src="public\voicememo.mp3" type="audio/mpeg" />
                 Your browser does not support the audio element.
               </audio>
               <div className="completion-hearts">

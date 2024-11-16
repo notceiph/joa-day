@@ -184,7 +184,7 @@ const App: React.FC = () => {
         <div className="completion-modal-overlay">
           <div className="completion-modal">
             <div className="completion-modal-header">
-              <h2>LETS GOOOO YOU FINISHED IT 🎁</h2>
+              <h2>shhhhhhhh</h2>
               <button 
                 onClick={() => setShowCompletionToast(false)}
                 className="modal-close-btn"
@@ -207,7 +207,7 @@ const App: React.FC = () => {
                 className="completion-audio"
                 aria-label="Completion celebration audio"
               >
-                <source src="public\voicememo.mp3" type="audio/mpeg" />
+                <source src="/voicememo.mp3" type="audio/mpeg" />
                 Your browser does not support the audio element.
               </audio>
               <div className="completion-hearts">
